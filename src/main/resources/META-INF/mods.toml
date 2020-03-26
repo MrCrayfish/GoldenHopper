@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+
+[[mods]]
+modId="goldenhopper"
+version="1.0.0"
+displayName="Golden Hopper"
+updateJSONURL="http://whydoineedaurl.com/"
+displayURL="http://whydoineedaurl.com/"
+logoFile=""
+credits=""
+authors="MrCrayfish"
+description="Adds a simple backpack to store more items"
+
+[[dependencies.goldenhopper]]
+    modId="forge"
+    mandatory=true
+    versionRange="[31,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.goldenhopper]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.15.2,1.16)"
+    ordering="NONE"
+    side="BOTH"
