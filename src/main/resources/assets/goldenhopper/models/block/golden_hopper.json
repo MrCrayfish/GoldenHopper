@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/hopper",
+    "textures": {
+        "particle": "goldenhopper:block/golden_hopper_outside",
+        "top": "goldenhopper:block/golden_hopper_top",
+        "side": "goldenhopper:block/golden_hopper_outside",
+        "inside": "goldenhopper:block/golden_hopper_inside"
+    }
+}
