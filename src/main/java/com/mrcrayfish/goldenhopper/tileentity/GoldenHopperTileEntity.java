@@ -210,7 +210,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
         return getSlotsStream(inventory, direction).allMatch((index) -> inventory.getStackInSlot(index).isEmpty());
     }
 
-    private static boolean pullItems(IHopper hopper)
+    public static boolean pullItems(IHopper hopper)
     {
         Boolean ret = net.minecraftforge.items.VanillaInventoryCodeHooks.extractHook(hopper);
         if(ret != null)
@@ -258,7 +258,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
         return false;
     }
 
-    private static boolean captureItemEntity(IInventory inventory, ItemEntity entity)
+    public static boolean captureItemEntity(IInventory inventory, ItemEntity entity)
     {
         boolean captured = false;
         ItemStack copy = entity.getItem().copy();

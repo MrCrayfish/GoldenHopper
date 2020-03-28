@@ -1,10 +1,7 @@
 package com.mrcrayfish.goldenhopper;
 
 import com.mrcrayfish.goldenhopper.client.ClientSetup;
-import com.mrcrayfish.goldenhopper.init.ModBlocks;
-import com.mrcrayfish.goldenhopper.init.ModContainers;
-import com.mrcrayfish.goldenhopper.init.ModItems;
-import com.mrcrayfish.goldenhopper.init.ModTileEntities;
+import com.mrcrayfish.goldenhopper.init.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -21,6 +18,7 @@ public class GoldenHopper
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         ModBlocks.REGISTER.register(bus);
         ModItems.REGISTER.register(bus);
+        ModEntities.REGISTER.register(bus);
         ModTileEntities.REGISTER.register(bus);
         ModContainers.REGISTER.register(bus);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);

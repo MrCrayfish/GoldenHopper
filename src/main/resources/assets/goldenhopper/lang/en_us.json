@@ -1,4 +1,5 @@
 {
     "block.goldenhopper.golden_hopper": "Golden Hopper",
-    "container.goldenhopper.golden_hopper": "Golden Hopper"
+    "container.goldenhopper.golden_hopper": "Golden Hopper",
+    "entity.goldenhopper.golden_hopper_minecart": "Minecart with Golden Hopper"
 }
