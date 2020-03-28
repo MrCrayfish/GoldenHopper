@@ -10,7 +10,7 @@ displayURL="http://mrcrayfish.com/mods?id=goldenhopper"
 logoFile="goldenhopper.png"
 credits="@Moonshiner99 on Twitter for the mod idea"
 authors="MrCrayfish"
-description="Adds a simple backpack to store more items"
+description="Simply adds a new golden hopper variant that can filter items, nothing more!"
 
 [[dependencies.goldenhopper]]
     modId="forge"
