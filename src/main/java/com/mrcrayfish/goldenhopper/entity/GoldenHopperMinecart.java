@@ -1,6 +1,7 @@
 package com.mrcrayfish.goldenhopper.entity;
 
 import com.mrcrayfish.goldenhopper.init.ModBlocks;
+import com.mrcrayfish.goldenhopper.init.ModEntities;
 import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
 import com.mrcrayfish.goldenhopper.tileentity.GoldenHopperTileEntity;
 import net.minecraft.block.BlockState;
@@ -35,6 +36,11 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
     private boolean blocked = true;
     private int transferTicker = -1;
     private final BlockPos lastPosition = BlockPos.ZERO;
+
+    public GoldenHopperMinecart(World world)
+    {
+        super(ModEntities.GOLDEN_HOPPER_MINECART.get(), world);
+    }
 
     public GoldenHopperMinecart(EntityType<?> type, World world)
     {

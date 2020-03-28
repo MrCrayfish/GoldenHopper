@@ -1,6 +1,6 @@
 package com.mrcrayfish.goldenhopper;
 
-import com.mrcrayfish.goldenhopper.client.ClientSetup;
+import com.mrcrayfish.goldenhopper.client.ClientHandler;
 import com.mrcrayfish.goldenhopper.init.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -26,6 +26,6 @@ public class GoldenHopper
 
     private void onClientSetup(FMLClientSetupEvent event)
     {
-        ClientSetup.init();
+        ClientHandler.init();
     }
 }

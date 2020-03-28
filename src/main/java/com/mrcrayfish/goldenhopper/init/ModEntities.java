@@ -1,16 +1,13 @@
 package com.mrcrayfish.goldenhopper.init;
 
 import com.mrcrayfish.goldenhopper.Reference;
+import com.mrcrayfish.goldenhopper.client.ClientHandler;
 import com.mrcrayfish.goldenhopper.entity.GoldenHopperMinecart;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.function.BiFunction;
 
 /**
  * Author: MrCrayfish
@@ -19,11 +16,14 @@ public class ModEntities
 {
     public static final DeferredRegister<EntityType<?>> REGISTER = new DeferredRegister<>(ForgeRegistries.ENTITIES, Reference.MOD_ID);
 
-    public static final RegistryObject<EntityType<GoldenHopperMinecart>> GOLDEN_HOPPER_MINECART = registerEntity("golden_hopper_minecart", GoldenHopperMinecart::new, 0.98F, 0.7F);
-
-    private static <T extends Entity> RegistryObject<EntityType<T>> registerEntity(String id, BiFunction<EntityType<T>, World, T> function, float width, float height)
-    {
-        EntityType<T> type = EntityType.Builder.create(function::apply, EntityClassification.MISC).size(width, height).build(id);
-        return ModEntities.REGISTER.register(id, () -> type);
-    }
+    public static final RegistryObject<EntityType<GoldenHopperMinecart>> GOLDEN_HOPPER_MINECART = REGISTER.register("golden_hopper_minecart", () -> {
+        EntityType<GoldenHopperMinecart> type = EntityType.Builder.<GoldenHopperMinecart>create(GoldenHopperMinecart::new, EntityClassification.MISC)
+            .size(0.98F, 0.7F)
+            .setCustomClientFactory((entity, world) -> {
+                GoldenHopperMinecart minecart = new GoldenHopperMinecart(world);
+                ClientHandler.handleGoldenHopperMinecartSpawn(minecart);
+                return minecart;
+            }).build("golden_hopper_minecart");
+        return type;
+    });
 }
