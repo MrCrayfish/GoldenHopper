@@ -8,7 +8,7 @@ displayName="Golden Hopper"
 updateJSONURL="https://raw.githubusercontent.com/MrCrayfish/ModUpdates/master/goldenhopper/update.json"
 displayURL="http://mrcrayfish.com/mods?id=goldenhopper"
 logoFile=""
-credits=""
+credits="@Moonshiner99 on Twitter for the mod idea"
 authors="MrCrayfish"
 description="Adds a simple backpack to store more items"
 
