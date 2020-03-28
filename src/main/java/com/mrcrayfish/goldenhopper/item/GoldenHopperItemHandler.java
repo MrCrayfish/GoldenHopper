@@ -1,8 +1,7 @@
-package com.mrcrayfish.goldenhopper.items;
+package com.mrcrayfish.goldenhopper.item;
 
 import com.mrcrayfish.goldenhopper.tileentity.GoldenHopperTileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nonnull;

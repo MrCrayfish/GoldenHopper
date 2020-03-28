@@ -2,6 +2,7 @@ package com.mrcrayfish.goldenhopper.entity;
 
 import com.mrcrayfish.goldenhopper.init.ModBlocks;
 import com.mrcrayfish.goldenhopper.init.ModEntities;
+import com.mrcrayfish.goldenhopper.init.ModItems;
 import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
 import com.mrcrayfish.goldenhopper.tileentity.GoldenHopperTileEntity;
 import net.minecraft.block.BlockState;
@@ -14,7 +15,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
-import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.IHopper;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -40,6 +40,11 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
     public GoldenHopperMinecart(World world)
     {
         super(ModEntities.GOLDEN_HOPPER_MINECART.get(), world);
+    }
+
+    public GoldenHopperMinecart(World world, double x, double y, double z)
+    {
+        super(ModEntities.GOLDEN_HOPPER_MINECART.get(), x, y, z, world);
     }
 
     public GoldenHopperMinecart(EntityType<?> type, World world)
@@ -98,7 +103,7 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
     @Override
     public ItemStack getCartItem()
     {
-        return ItemStack.EMPTY;
+        return new ItemStack(ModItems.GOLDEN_HOPPER_MINECART.get());
     }
 
     @Override

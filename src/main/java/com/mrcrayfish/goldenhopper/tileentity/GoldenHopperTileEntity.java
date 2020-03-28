@@ -3,7 +3,7 @@ package com.mrcrayfish.goldenhopper.tileentity;
 import com.mrcrayfish.goldenhopper.block.GoldenHopperBlock;
 import com.mrcrayfish.goldenhopper.init.ModTileEntities;
 import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
-import com.mrcrayfish.goldenhopper.items.GoldenHopperItemHandler;
+import com.mrcrayfish.goldenhopper.item.GoldenHopperItemHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
