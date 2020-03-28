@@ -2,8 +2,10 @@ package com.mrcrayfish.goldenhopper.client.screen;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -46,5 +48,11 @@ public class GoldenHopperScreen extends ContainerScreen<GoldenHopperContainer>
         int startX = (this.width - this.xSize) / 2;
         int startY = (this.height - this.ySize) / 2;
         this.blit(startX, startY, 0, 0, this.xSize, this.ySize);
+
+        Slot slot = this.container.getSlot(0);
+        if(!slot.getHasStack())
+        {
+            blit(this.guiLeft + slot.xPos, this.guiTop + slot.yPos, this.xSize, 0, 16, 16);
+        }
     }
 }
