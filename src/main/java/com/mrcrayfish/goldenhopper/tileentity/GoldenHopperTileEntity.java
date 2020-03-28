@@ -3,6 +3,7 @@ package com.mrcrayfish.goldenhopper.tileentity;
 import com.mrcrayfish.goldenhopper.block.GoldenHopperBlock;
 import com.mrcrayfish.goldenhopper.init.ModTileEntities;
 import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
+import com.mrcrayfish.goldenhopper.items.GoldenHopperItemHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -27,6 +28,10 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.VanillaInventoryCodeHooks;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -153,10 +158,10 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
 
     private boolean transferItemsOut()
     {
-        /*if(net.minecraftforge.items.VanillaInventoryCodeHooks.insertHook(this))
+        if(insertHook(this))
         {
-            return true; //TODO needs a rework
-        }*/
+            return true;
+        }
 
         IInventory inventory = this.getInventoryForHopperTransfer();
         if(inventory == null)
@@ -452,7 +457,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
         return this.pos.getZ() + 0.5;
     }
 
-    private void setTransferCooldown(int ticks)
+    public void setTransferCooldown(int ticks)
     {
         this.transferCooldown = ticks;
     }
@@ -498,8 +503,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
     @Override
     protected net.minecraftforge.items.IItemHandler createUnSidedHandler()
     {
-        return new net.minecraftforge.items.wrapper.SidedInvWrapper(this, null); //TODO might need to write a custom handler
-        //return new net.minecraftforge.items.VanillaHopperItemHandler(this);
+        return new GoldenHopperItemHandler(this);
     }
 
     @Override
@@ -524,5 +528,52 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
     public boolean canExtractItem(int index, ItemStack stack, Direction direction)
     {
         return index != 0;
+    }
+
+    public static boolean insertHook(GoldenHopperTileEntity hopper)
+    {
+        Direction direction = hopper.getBlockState().get(GoldenHopperBlock.FACING);
+        double x = hopper.getXPos() + (double) direction.getXOffset();
+        double y = hopper.getYPos() + (double) direction.getYOffset();
+        double z = hopper.getZPos() + (double) direction.getZOffset();
+        LazyOptional<Pair<IItemHandler, Object>> handler = VanillaInventoryCodeHooks.getItemHandler(hopper.getWorld(), x, y, z, direction);
+        return handler.map(destinationResult ->
+        {
+            IItemHandler itemHandler = destinationResult.getKey();
+            if(isFull(itemHandler))
+            {
+                return false;
+            }
+
+            Object destination = destinationResult.getValue();
+            for(int i = 0; i < hopper.getSizeInventory(); ++i)
+            {
+                if(!hopper.getStackInSlot(i).isEmpty() && hopper.canExtractItem(i, hopper.getStackInSlot(i), direction))
+                {
+                    ItemStack originalSlotContents = hopper.getStackInSlot(i).copy();
+                    ItemStack insertStack = hopper.decrStackSize(i, 1);
+                    ItemStack remainder = putStackInInventoryAllSlots(hopper, (IInventory) destination, insertStack, direction.getOpposite());
+                    if(remainder.isEmpty())
+                    {
+                        return true;
+                    }
+                    hopper.setInventorySlotContents(i, originalSlotContents);
+                }
+            }
+            return false;
+        }).orElse(false);
+    }
+
+    private static boolean isFull(IItemHandler handler)
+    {
+        for(int slot = 0; slot < handler.getSlots(); slot++)
+        {
+            ItemStack stack = handler.getStackInSlot(slot);
+            if(stack.isEmpty() || stack.getCount() != stack.getMaxStackSize())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
