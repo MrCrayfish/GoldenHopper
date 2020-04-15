@@ -3,7 +3,7 @@ loaderVersion="[31,)"
 
 [[mods]]
 modId="goldenhopper"
-version="1.0.0"
+version="1.1.0"
 displayName="Golden Hopper"
 updateJSONURL="https://raw.githubusercontent.com/MrCrayfish/ModUpdates/master/goldenhopper/update.json"
 displayURL="http://mrcrayfish.com/mods?id=goldenhopper"
