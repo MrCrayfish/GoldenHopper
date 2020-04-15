@@ -8,7 +8,7 @@ displayName="Golden Hopper"
 updateJSONURL="https://raw.githubusercontent.com/MrCrayfish/ModUpdates/master/goldenhopper/update.json"
 displayURL="http://mrcrayfish.com/mods?id=goldenhopper"
 logoFile="goldenhopper.png"
-credits="@Moonshiner99 on Twitter for the mod idea"
+credits="@Moonshiner99 on Twitter for the mod idea. Pois1x for improved textures!"
 authors="MrCrayfish"
 description="Simply adds a new golden hopper variant that can filter items, nothing more!"
 
