@@ -30,6 +30,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -275,6 +276,64 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
         return captured;
     }
 
+    private static ItemStack putStackInInventoryAllSlots(TileEntity source, Object destination, IItemHandler destInventory, ItemStack stack)
+    {
+        for(int slot = 0; slot < destInventory.getSlots() && !stack.isEmpty(); slot++)
+        {
+            stack = insertStack(source, destination, destInventory, stack, slot);
+        }
+        return stack;
+    }
+
+    private static ItemStack insertStack(TileEntity source, Object destination, IItemHandler destInventory, ItemStack stack, int slot)
+    {
+        ItemStack itemstack = destInventory.getStackInSlot(slot);
+
+        if(destInventory.insertItem(slot, stack, true).isEmpty())
+        {
+            boolean insertedItem = false;
+            boolean inventoryWasEmpty = isEmpty(destInventory);
+
+            if(itemstack.isEmpty())
+            {
+                destInventory.insertItem(slot, stack, false);
+                stack = ItemStack.EMPTY;
+                insertedItem = true;
+            }
+            else if(ItemHandlerHelper.canItemStacksStack(itemstack, stack))
+            {
+                int originalSize = stack.getCount();
+                stack = destInventory.insertItem(slot, stack, false);
+                insertedItem = originalSize < stack.getCount();
+            }
+
+            if(insertedItem)
+            {
+                if(inventoryWasEmpty && destination instanceof HopperTileEntity)
+                {
+                    HopperTileEntity destinationHopper = (HopperTileEntity) destination;
+
+                    if(!destinationHopper.mayTransfer())
+                    {
+                        int k = 0;
+/* TODO TileEntityHopper patches
+                        if (source instanceof TileEntityHopper)
+                        {
+                            if (destinationHopper.getLastUpdateTime() >= ((TileEntityHopper) source).getLastUpdateTime())
+                            {
+                                k = 1;
+                            }
+                        }
+*/
+                        destinationHopper.setTransferCooldown(8 - k);
+                    }
+                }
+            }
+        }
+
+        return stack;
+    }
+
     private static ItemStack putStackInInventoryAllSlots(@Nullable IInventory source, IInventory destination, ItemStack stack, @Nullable Direction direction)
     {
         if(destination instanceof ISidedInventory && direction != null)
@@ -283,7 +342,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
             int[] slots = sidedInventory.getSlotsForFace(direction);
             for(int i = 0; i < slots.length && !stack.isEmpty(); i++)
             {
-                stack = insertStack(source, destination, stack, slots[i], direction);
+                stack = insertStack(source, sidedInventory, stack, slots[i], direction);
             }
         }
         else
@@ -530,15 +589,14 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
         return index != 0;
     }
 
-    public static boolean insertHook(GoldenHopperTileEntity hopper)
+    private static boolean insertHook(GoldenHopperTileEntity hopper)
     {
         Direction direction = hopper.getBlockState().get(GoldenHopperBlock.FACING);
         double x = hopper.getXPos() + (double) direction.getXOffset();
         double y = hopper.getYPos() + (double) direction.getYOffset();
         double z = hopper.getZPos() + (double) direction.getZOffset();
-        LazyOptional<Pair<IItemHandler, Object>> handler = VanillaInventoryCodeHooks.getItemHandler(hopper.getWorld(), x, y, z, direction);
-        return handler.map(destinationResult ->
-        {
+        LazyOptional<Pair<IItemHandler, Object>> handler = VanillaInventoryCodeHooks.getItemHandler(hopper.getWorld(), x, y, z, direction.getOpposite());
+        return handler.map(destinationResult -> {
             IItemHandler itemHandler = destinationResult.getKey();
             if(isFull(itemHandler))
             {
@@ -552,7 +610,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
                 {
                     ItemStack originalSlotContents = hopper.getStackInSlot(i).copy();
                     ItemStack insertStack = hopper.decrStackSize(i, 1);
-                    ItemStack remainder = putStackInInventoryAllSlots(hopper, (IInventory) destination, insertStack, direction.getOpposite());
+                    ItemStack remainder = putStackInInventoryAllSlots(hopper, destination, itemHandler, insertStack);
                     if(remainder.isEmpty())
                     {
                         return true;
@@ -570,6 +628,19 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
         {
             ItemStack stack = handler.getStackInSlot(slot);
             if(stack.isEmpty() || stack.getCount() != stack.getMaxStackSize())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isEmpty(IItemHandler itemHandler)
+    {
+        for(int slot = 0; slot < itemHandler.getSlots(); slot++)
+        {
+            ItemStack stackInSlot = itemHandler.getStackInSlot(slot);
+            if(stackInSlot.getCount() > 0)
             {
                 return false;
             }
