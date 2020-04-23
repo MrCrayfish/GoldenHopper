@@ -29,7 +29,14 @@ public class GoldenHopperContainer extends Container
         assertInventorySize(hopperInventory, 6);
         hopperInventory.openInventory(playerInventory.player);
 
-        this.addSlot(new Slot(hopperInventory, 0, 26, 20));
+        this.addSlot(new Slot(hopperInventory, 0, 26, 20)
+        {
+            @Override
+            public int getSlotStackLimit()
+            {
+                return 1;
+            }
+        });
 
         for(int i = 0; i < 5; i++)
         {
