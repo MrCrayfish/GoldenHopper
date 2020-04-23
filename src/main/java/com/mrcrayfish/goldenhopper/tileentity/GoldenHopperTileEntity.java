@@ -115,13 +115,13 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
     {
         if(this.world != null && !this.world.isRemote)
         {
-            if(this.transferCooldown > 0)
-            {
-                this.transferCooldown--;
-                return;
-            }
+            this.transferCooldown--;
             this.tickedGameTime = this.world.getGameTime();
-            this.updateHopper(() -> pullItems(this)); //TODO need to make custom one that filters
+            if(!this.isOnTransferCooldown())
+            {
+                this.setTransferCooldown(0);
+                this.updateHopper(() -> pullItems(this)); //TODO need to make custom one that filters
+            }
         }
     }
 
