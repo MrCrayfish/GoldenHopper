@@ -1,17 +1,24 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "I I",
+        "IRI",
         "ICI",
-        " I "
+        "DID"
     ],
     "key": {
         "C": {
-            "item": "minecraft:chest"
+            "item": "minecraft:hopper"
         },
         "I": {
             "item": "minecraft:gold_ingot"
+        },
+        "R": {
+            "item": "minecraft:comparator"
+        },
+        "D": {
+            "item": "minecraft:redstone"
         }
+
     },
     "result": {
         "item": "goldenhopper:golden_hopper"
