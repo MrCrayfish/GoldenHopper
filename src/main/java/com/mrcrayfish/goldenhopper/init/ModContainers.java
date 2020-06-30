@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class ModContainers
 {
-    public static final DeferredRegister<ContainerType<?>> REGISTER = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Reference.MOD_ID);
+    public static final DeferredRegister<ContainerType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.CONTAINERS, Reference.MOD_ID);
 
     public static final RegistryObject<ContainerType<GoldenHopperContainer>> GOLDEN_HOPPER = register("golden_hopper", GoldenHopperContainer::new);
 
