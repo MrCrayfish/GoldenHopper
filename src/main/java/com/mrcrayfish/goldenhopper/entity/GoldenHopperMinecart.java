@@ -83,7 +83,7 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
     }
 
     @Override
-    protected Container func_213968_a(int windowId, PlayerInventory playerInventory)
+    protected Container createContainer(int windowId, PlayerInventory playerInventory)
     {
         return new GoldenHopperContainer(windowId, playerInventory, this);
     }
@@ -122,19 +122,19 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
     @Override
     public double getXPos()
     {
-        return this.func_226277_ct_();
+        return this.getPosX();
     }
 
     @Override
     public double getYPos()
     {
-        return this.func_226278_cu_() + 0.5D;
+        return this.getPosY() + 0.5D;
     }
 
     @Override
     public double getZPos()
     {
-        return this.func_226281_cx_();
+        return this.getPosZ();
     }
 
     @Override
