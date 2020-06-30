@@ -57,9 +57,11 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
     }
 
     @Override
-    public void read(CompoundNBT compound)
+    // TODO MCP-name: public void read(CompoundNBT compound)
+    public void func_230337_a_(BlockState p_230337_1_, CompoundNBT compound)
     {
-        super.read(compound);
+        // TODO MCP-name: super.read(compound);
+        super.func_230337_a_(p_230337_1_, compound);
         this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
         if(!this.checkLootAndRead(compound))
         {

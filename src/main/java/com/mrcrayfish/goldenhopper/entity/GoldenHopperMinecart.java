@@ -182,7 +182,8 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
         super.tick();
         if(!this.world.isRemote && this.isAlive() && this.isBlocked())
         {
-            BlockPos pos = new BlockPos(this);
+            // TODO MCP-name? BlockPos pos = new BlockPos(this);
+            BlockPos pos = func_233580_cy_();
             if(pos.equals(this.lastPosition))
             {
                 this.transferTicker--;
