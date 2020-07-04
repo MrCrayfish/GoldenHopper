@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class ModTileEntities
 {
-    public static final DeferredRegister<TileEntityType<?>> REGISTER = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Reference.MOD_ID);
+    public static final DeferredRegister<TileEntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Reference.MOD_ID);
 
     public static final RegistryObject<TileEntityType<GoldenHopperTileEntity>> GOLDEN_HOPPER = register("golden_hopper", GoldenHopperTileEntity::new, () -> new Block[]{ModBlocks.GOLDEN_HOPPER.get()});
 

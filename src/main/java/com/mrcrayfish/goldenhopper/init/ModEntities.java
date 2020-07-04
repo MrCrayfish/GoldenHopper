@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class ModEntities
 {
-    public static final DeferredRegister<EntityType<?>> REGISTER = new DeferredRegister<>(ForgeRegistries.ENTITIES, Reference.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.ENTITIES, Reference.MOD_ID);
 
     public static final RegistryObject<EntityType<GoldenHopperMinecart>> GOLDEN_HOPPER_MINECART = REGISTER.register("golden_hopper_minecart", () -> {
         EntityType<GoldenHopperMinecart> type = EntityType.Builder.<GoldenHopperMinecart>create(GoldenHopperMinecart::new, EntityClassification.MISC)

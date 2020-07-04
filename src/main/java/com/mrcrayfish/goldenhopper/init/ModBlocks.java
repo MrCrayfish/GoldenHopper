@@ -19,7 +19,7 @@ import java.util.function.Function;
  */
 public class ModBlocks
 {
-    public static final DeferredRegister<Block> REGISTER = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MOD_ID);
+    public static final DeferredRegister<Block> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Reference.MOD_ID);
 
     public static final RegistryObject<Block> GOLDEN_HOPPER = register("golden_hopper", new GoldenHopperBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(2.0F)));
 
