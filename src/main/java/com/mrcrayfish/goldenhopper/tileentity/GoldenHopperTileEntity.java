@@ -36,6 +36,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -57,11 +58,9 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
     }
 
     @Override
-    // TODO MCP-name: func_230337_a_ -> read
-    public void func_230337_a_(BlockState p_230337_1_, CompoundNBT compound)
+    public void read(BlockState state, CompoundNBT compound)
     {
-        // TODO MCP-name: func_230337_a_ -> read
-        super.func_230337_a_(p_230337_1_, compound);
+        super.read(state, compound);
         this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
         if(!this.checkLootAndRead(compound))
         {
@@ -463,7 +462,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
                 targetInventory = (IInventory) tileEntity;
                 if(targetInventory instanceof ChestTileEntity && targetBlock instanceof ChestBlock)
                 {
-                    targetInventory = ChestBlock.func_226916_a_((ChestBlock) targetBlock, targetState, worldIn, targetPos, true);
+                    targetInventory = ChestBlock.getChestInventory((ChestBlock) targetBlock, targetState, worldIn, targetPos, true);
                 }
             }
         }
@@ -597,7 +596,7 @@ public class GoldenHopperTileEntity extends LockableLootTileEntity implements IH
         double x = hopper.getXPos() + (double) direction.getXOffset();
         double y = hopper.getYPos() + (double) direction.getYOffset();
         double z = hopper.getZPos() + (double) direction.getZOffset();
-        LazyOptional<Pair<IItemHandler, Object>> handler = VanillaInventoryCodeHooks.getItemHandler(hopper.getWorld(), x, y, z, direction.getOpposite());
+        Optional<Pair<IItemHandler, Object>> handler = VanillaInventoryCodeHooks.getItemHandler(hopper.getWorld(), x, y, z, direction.getOpposite());
         return handler.map(destinationResult -> {
             IItemHandler itemHandler = destinationResult.getKey();
             if(isFull(itemHandler))
