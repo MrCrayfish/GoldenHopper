@@ -40,8 +40,7 @@ public class GoldenHopperMinecartItem extends Item
             BlockState adjacentState = world.getBlockState(adjacentPos);
             RailShape adjacentShape = adjacentState.getBlock() instanceof AbstractRailBlock ? ((AbstractRailBlock) adjacentState.getBlock()).getRailDirection(adjacentState, world, adjacentPos, null) : RailShape.NORTH_SOUTH;
             double yOffset;
-            // TODO: MCP-name: func_235714_a_ -> isIn
-            if(adjacentState.func_235714_a_(BlockTags.RAILS))
+            if(adjacentState.isIn(BlockTags.RAILS))
             {
                 if(adjacentShape.isAscending())
                 {
@@ -54,8 +53,7 @@ public class GoldenHopperMinecartItem extends Item
             }
             else
             {
-                // TODO: MCP-name: func_235714_a_ -> isIn
-                if(!adjacentState.isAir(world, adjacentPos) || !world.getBlockState(adjacentPos.down()).func_235714_a_(BlockTags.RAILS))
+                if(!adjacentState.isAir(world, adjacentPos) || !world.getBlockState(adjacentPos.down()).isIn(BlockTags.RAILS))
                 {
                     return this.behaviourDefaultDispenseItem.dispense(source, stack);
                 }
@@ -102,8 +100,7 @@ public class GoldenHopperMinecartItem extends Item
         World world = context.getWorld();
         BlockPos pos = context.getPos();
         BlockState state = world.getBlockState(pos);
-        // TODO: MCP-name: func_235714_a_ -> isIn
-        if(!state.func_235714_a_(BlockTags.RAILS))
+        if(!state.isIn(BlockTags.RAILS))
         {
             return ActionResultType.FAIL;
         }
