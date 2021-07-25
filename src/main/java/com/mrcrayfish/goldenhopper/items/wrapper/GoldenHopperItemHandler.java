@@ -1,6 +1,6 @@
-package com.mrcrayfish.goldenhopper.item;
+package com.mrcrayfish.goldenhopper.items.wrapper;
 
-import com.mrcrayfish.goldenhopper.block.entity.GoldenHopperBlockEntity;
+import com.mrcrayfish.goldenhopper.world.level.block.entity.GoldenHopperBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 

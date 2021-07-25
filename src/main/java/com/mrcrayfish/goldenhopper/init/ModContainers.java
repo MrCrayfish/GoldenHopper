@@ -1,7 +1,7 @@
 package com.mrcrayfish.goldenhopper.init;
 
 import com.mrcrayfish.goldenhopper.Reference;
-import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
+import com.mrcrayfish.goldenhopper.world.inventory.GoldenHopperMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.fmllegacy.RegistryObject;
@@ -15,7 +15,7 @@ public class ModContainers
 {
     public static final DeferredRegister<MenuType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.CONTAINERS, Reference.MOD_ID);
 
-    public static final RegistryObject<MenuType<GoldenHopperContainer>> GOLDEN_HOPPER = register("golden_hopper", GoldenHopperContainer::new);
+    public static final RegistryObject<MenuType<GoldenHopperMenu>> GOLDEN_HOPPER = register("golden_hopper", GoldenHopperMenu::new);
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String id, MenuType.MenuSupplier<T> factory)
     {

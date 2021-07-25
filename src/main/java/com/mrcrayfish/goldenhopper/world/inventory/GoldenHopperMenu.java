@@ -1,4 +1,4 @@
-package com.mrcrayfish.goldenhopper.inventory.container;
+package com.mrcrayfish.goldenhopper.world.inventory;
 
 import com.mrcrayfish.goldenhopper.init.ModContainers;
 import net.minecraft.world.Container;
@@ -12,16 +12,16 @@ import net.minecraft.world.item.ItemStack;
 /**
  * Author: MrCrayfish
  */
-public class GoldenHopperContainer extends AbstractContainerMenu
+public class GoldenHopperMenu extends AbstractContainerMenu
 {
     private final Container hopperInventory;
 
-    public GoldenHopperContainer(int windowId, Inventory playerInventory)
+    public GoldenHopperMenu(int windowId, Inventory playerInventory)
     {
         this(windowId, playerInventory, new SimpleContainer(6));
     }
 
-    public GoldenHopperContainer(int windowId, Inventory playerInventory, Container hopperInventory)
+    public GoldenHopperMenu(int windowId, Inventory playerInventory, Container hopperInventory)
     {
         super(ModContainers.GOLDEN_HOPPER.get(), windowId);
         this.hopperInventory = hopperInventory;

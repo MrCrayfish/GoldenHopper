@@ -1,4 +1,4 @@
-package com.mrcrayfish.goldenhopper.block.entity;
+package com.mrcrayfish.goldenhopper.world.level.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

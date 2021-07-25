@@ -1,6 +1,6 @@
-package com.mrcrayfish.goldenhopper.item;
+package com.mrcrayfish.goldenhopper.world.level.item;
 
-import com.mrcrayfish.goldenhopper.entity.GoldenHopperMinecart;
+import com.mrcrayfish.goldenhopper.world.entity.vehicle.GoldenHopperMinecart;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;

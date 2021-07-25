@@ -1,7 +1,7 @@
 package com.mrcrayfish.goldenhopper.init;
 
 import com.mrcrayfish.goldenhopper.Reference;
-import com.mrcrayfish.goldenhopper.item.GoldenHopperMinecartItem;
+import com.mrcrayfish.goldenhopper.world.level.item.GoldenHopperMinecartItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.fmllegacy.RegistryObject;

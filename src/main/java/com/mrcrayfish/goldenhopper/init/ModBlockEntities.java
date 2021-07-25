@@ -1,7 +1,7 @@
 package com.mrcrayfish.goldenhopper.init;
 
 import com.mrcrayfish.goldenhopper.Reference;
-import com.mrcrayfish.goldenhopper.block.entity.GoldenHopperBlockEntity;
+import com.mrcrayfish.goldenhopper.world.level.block.entity.GoldenHopperBlockEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;

@@ -1,7 +1,7 @@
 package com.mrcrayfish.goldenhopper.init;
 
 import com.mrcrayfish.goldenhopper.Reference;
-import com.mrcrayfish.goldenhopper.block.GoldenHopperBlock;
+import com.mrcrayfish.goldenhopper.world.level.block.GoldenHopperBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;

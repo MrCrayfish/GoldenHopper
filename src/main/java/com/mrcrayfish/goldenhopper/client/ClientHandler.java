@@ -1,6 +1,6 @@
 package com.mrcrayfish.goldenhopper.client;
 
-import com.mrcrayfish.goldenhopper.client.screen.GoldenHopperScreen;
+import com.mrcrayfish.goldenhopper.client.gui.screens.inventory.GoldenHopperScreen;
 import com.mrcrayfish.goldenhopper.init.ModContainers;
 import com.mrcrayfish.goldenhopper.init.ModEntities;
 import net.minecraft.client.Minecraft;

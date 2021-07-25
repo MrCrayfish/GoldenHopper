@@ -1,8 +1,8 @@
-package com.mrcrayfish.goldenhopper.client.screen;
+package com.mrcrayfish.goldenhopper.client.gui.screens.inventory;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
+import com.mrcrayfish.goldenhopper.world.inventory.GoldenHopperMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -16,11 +16,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * Author: MrCrayfish
  */
 @OnlyIn(Dist.CLIENT)
-public class GoldenHopperScreen extends AbstractContainerScreen<GoldenHopperContainer>
+public class GoldenHopperScreen extends AbstractContainerScreen<GoldenHopperMenu>
 {
     private static final ResourceLocation HOPPER_GUI_TEXTURE = new ResourceLocation("goldenhopper:textures/gui/container/golden_hopper.png");
 
-    public GoldenHopperScreen(GoldenHopperContainer container, Inventory playerInventory, Component titleIn)
+    public GoldenHopperScreen(GoldenHopperMenu container, Inventory playerInventory, Component titleIn)
     {
         super(container, playerInventory, titleIn);
         this.imageHeight = 133;

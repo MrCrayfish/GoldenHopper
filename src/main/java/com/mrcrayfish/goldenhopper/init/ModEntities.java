@@ -2,7 +2,7 @@ package com.mrcrayfish.goldenhopper.init;
 
 import com.mrcrayfish.goldenhopper.Reference;
 import com.mrcrayfish.goldenhopper.client.ClientHandler;
-import com.mrcrayfish.goldenhopper.entity.GoldenHopperMinecart;
+import com.mrcrayfish.goldenhopper.world.entity.vehicle.GoldenHopperMinecart;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.fmllegacy.RegistryObject;

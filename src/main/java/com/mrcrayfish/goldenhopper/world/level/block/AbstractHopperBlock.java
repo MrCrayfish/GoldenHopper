@@ -1,6 +1,6 @@
-package com.mrcrayfish.goldenhopper.block;
+package com.mrcrayfish.goldenhopper.world.level.block;
 
-import com.mrcrayfish.goldenhopper.block.entity.AbstractHopperBlockEntity;
+import com.mrcrayfish.goldenhopper.world.level.block.entity.AbstractHopperBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

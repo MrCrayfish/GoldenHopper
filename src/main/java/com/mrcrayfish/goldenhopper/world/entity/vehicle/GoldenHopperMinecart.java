@@ -1,10 +1,10 @@
-package com.mrcrayfish.goldenhopper.entity;
+package com.mrcrayfish.goldenhopper.world.entity.vehicle;
 
-import com.mrcrayfish.goldenhopper.block.entity.AbstractHopperBlockEntity;
 import com.mrcrayfish.goldenhopper.init.ModBlocks;
 import com.mrcrayfish.goldenhopper.init.ModEntities;
 import com.mrcrayfish.goldenhopper.init.ModItems;
-import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
+import com.mrcrayfish.goldenhopper.world.inventory.GoldenHopperMenu;
+import com.mrcrayfish.goldenhopper.world.level.block.entity.AbstractHopperBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -71,7 +71,7 @@ public class GoldenHopperMinecart extends AbstractMinecartContainer implements H
     @Override
     protected AbstractContainerMenu createMenu(int windowId, Inventory playerInventory)
     {
-        return new GoldenHopperContainer(windowId, playerInventory, this);
+        return new GoldenHopperMenu(windowId, playerInventory, this);
     }
 
     @Override

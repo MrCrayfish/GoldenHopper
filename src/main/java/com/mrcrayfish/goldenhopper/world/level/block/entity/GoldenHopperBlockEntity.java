@@ -1,8 +1,8 @@
-package com.mrcrayfish.goldenhopper.block.entity;
+package com.mrcrayfish.goldenhopper.world.level.block.entity;
 
 import com.mrcrayfish.goldenhopper.init.ModBlockEntities;
-import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
-import com.mrcrayfish.goldenhopper.item.GoldenHopperItemHandler;
+import com.mrcrayfish.goldenhopper.items.wrapper.GoldenHopperItemHandler;
+import com.mrcrayfish.goldenhopper.world.inventory.GoldenHopperMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -50,7 +50,7 @@ public class GoldenHopperBlockEntity extends AbstractHopperBlockEntity implement
     @Override
     protected AbstractContainerMenu createMenu(int windowId, Inventory playerInventory)
     {
-        return new GoldenHopperContainer(windowId, playerInventory, this);
+        return new GoldenHopperMenu(windowId, playerInventory, this);
     }
 
     @Override
