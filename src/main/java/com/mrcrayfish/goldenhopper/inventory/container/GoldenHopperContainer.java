@@ -1,38 +1,37 @@
 package com.mrcrayfish.goldenhopper.inventory.container;
 
 import com.mrcrayfish.goldenhopper.init.ModContainers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Author: MrCrayfish
  */
-public class GoldenHopperContainer extends Container
+public class GoldenHopperContainer extends AbstractContainerMenu
 {
-    private final IInventory hopperInventory;
+    private final Container hopperInventory;
 
-    public GoldenHopperContainer(int windowId, PlayerInventory playerInventory)
+    public GoldenHopperContainer(int windowId, Inventory playerInventory)
     {
-        this(windowId, playerInventory, new Inventory(6));
+        this(windowId, playerInventory, new SimpleContainer(6));
     }
 
-    public GoldenHopperContainer(int windowId, PlayerInventory playerInventory, IInventory hopperInventory)
+    public GoldenHopperContainer(int windowId, Inventory playerInventory, Container hopperInventory)
     {
         super(ModContainers.GOLDEN_HOPPER.get(), windowId);
         this.hopperInventory = hopperInventory;
-        assertInventorySize(hopperInventory, 6);
-        hopperInventory.openInventory(playerInventory.player);
+        checkContainerSize(hopperInventory, 6);
+        hopperInventory.startOpen(playerInventory.player);
 
         this.addSlot(new Slot(hopperInventory, 0, 26, 20)
         {
             @Override
-            public int getSlotStackLimit()
+            public int getMaxStackSize()
             {
                 return 1;
             }
@@ -59,39 +58,39 @@ public class GoldenHopperContainer extends Container
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn)
+    public boolean stillValid(Player player)
     {
-        return this.hopperInventory.isUsableByPlayer(playerIn);
+        return this.hopperInventory.stillValid(player);
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
+    public ItemStack quickMoveStack(Player player, int index)
     {
         ItemStack result = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
-        if(slot != null && slot.getHasStack())
+        Slot slot = this.slots.get(index);
+        if(slot != null && slot.hasItem())
         {
-            ItemStack slotStack = slot.getStack();
+            ItemStack slotStack = slot.getItem();
             result = slotStack.copy();
-            if(index < this.hopperInventory.getSizeInventory())
+            if(index < this.hopperInventory.getContainerSize())
             {
-                if(!this.mergeItemStack(slotStack, this.hopperInventory.getSizeInventory(), this.inventorySlots.size(), true))
+                if(!this.moveItemStackTo(slotStack, this.hopperInventory.getContainerSize(), this.slots.size(), true))
                 {
                     return ItemStack.EMPTY;
                 }
             }
-            else if(!this.mergeItemStack(slotStack, 1, this.hopperInventory.getSizeInventory(), false))
+            else if(!this.moveItemStackTo(slotStack, 1, this.hopperInventory.getContainerSize(), false))
             {
                 return ItemStack.EMPTY;
             }
 
             if(slotStack.isEmpty())
             {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             }
             else
             {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
         }
 
@@ -99,9 +98,9 @@ public class GoldenHopperContainer extends Container
     }
 
     @Override
-    public void onContainerClosed(PlayerEntity playerIn)
+    public void removed(Player player)
     {
-        super.onContainerClosed(playerIn);
-        this.hopperInventory.closeInventory(playerIn);
+        super.removed(player);
+        this.hopperInventory.stopOpen(player);
     }
 }

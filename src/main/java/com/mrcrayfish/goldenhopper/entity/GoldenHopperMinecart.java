@@ -4,25 +4,25 @@ import com.mrcrayfish.goldenhopper.init.ModBlocks;
 import com.mrcrayfish.goldenhopper.init.ModEntities;
 import com.mrcrayfish.goldenhopper.init.ModItems;
 import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
-import com.mrcrayfish.goldenhopper.tileentity.GoldenHopperTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.item.minecart.ContainerMinecartEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.tileentity.IHopper;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import com.mrcrayfish.goldenhopper.block.entity.GoldenHopperBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.vehicle.AbstractMinecartContainer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.Hopper;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,25 +31,20 @@ import java.util.stream.IntStream;
 /**
  * Author: MrCrayfish
  */
-public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHopper, ISidedInventory
+public class GoldenHopperMinecart extends AbstractMinecartContainer implements Hopper, WorldlyContainer
 {
     private boolean blocked = true;
     private int transferTicker = -1;
     private final BlockPos lastPosition = BlockPos.ZERO;
 
-    public GoldenHopperMinecart(World world)
+    public GoldenHopperMinecart(EntityType<?> type, Level level)
     {
-        super(ModEntities.GOLDEN_HOPPER_MINECART.get(), world);
+        super(type, level);
     }
 
-    public GoldenHopperMinecart(World world, double x, double y, double z)
+    public GoldenHopperMinecart(Level level, double x, double y, double z)
     {
-        super(ModEntities.GOLDEN_HOPPER_MINECART.get(), x, y, z, world);
-    }
-
-    public GoldenHopperMinecart(EntityType<?> type, World world)
-    {
-        super(type, world);
+        super(ModEntities.GOLDEN_HOPPER_MINECART.get(), x, y, z, level);
     }
 
     public boolean isBlocked()
@@ -83,19 +78,19 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
     }
 
     @Override
-    protected Container createContainer(int windowId, PlayerInventory playerInventory)
+    protected AbstractContainerMenu createMenu(int windowId, Inventory playerInventory)
     {
         return new GoldenHopperContainer(windowId, playerInventory, this);
     }
 
     @Override
-    public BlockState getDefaultDisplayTile()
+    public BlockState getDefaultDisplayBlockState()
     {
-        return ModBlocks.GOLDEN_HOPPER.get().getDefaultState();
+        return ModBlocks.GOLDEN_HOPPER.get().defaultBlockState();
     }
 
     @Override
-    public int getDefaultDisplayTileOffset()
+    public int getDefaultDisplayOffset()
     {
         return 1;
     }
@@ -112,63 +107,56 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
         return Type.HOPPER;
     }
 
-    @Nullable
     @Override
-    public World getWorld()
+    public double getLevelX()
     {
-        return this.world;
+        return this.getX();
     }
 
     @Override
-    public double getXPos()
+    public double getLevelY()
     {
-        return this.getPosX();
+        return this.getY() + 0.5D;
     }
 
     @Override
-    public double getYPos()
+    public double getLevelZ()
     {
-        return this.getPosY() + 0.5D;
+        return this.getZ();
     }
 
     @Override
-    public double getZPos()
-    {
-        return this.getPosZ();
-    }
-
-    @Override
-    public int getSizeInventory()
+    public int getContainerSize()
     {
         return 6;
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack)
+    public boolean canPlaceItem(int index, ItemStack stack)
     {
-        return index != 0 && (this.getStackInSlot(0).isEmpty() || stack.getItem() == this.getStackInSlot(0).getItem());
+        return index != 0 && (this.getItem(0).isEmpty() || stack.getItem() == this.getItem(0).getItem());
     }
 
     @Override
     public int[] getSlotsForFace(Direction side)
     {
-        return IntStream.range(1, this.getSizeInventory()).toArray();
+        return IntStream.range(1, this.getContainerSize()).toArray();
     }
 
     @Override
-    public boolean canInsertItem(int index, ItemStack stack, @Nullable Direction direction)
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction)
     {
-        return index != 0 && (this.getStackInSlot(0).isEmpty() || stack.getItem() == this.getStackInSlot(0).getItem());
+        return index != 0 && (this.getItem(0).isEmpty() || stack.getItem() == this.getItem(0).getItem());
     }
 
     @Override
-    public boolean canExtractItem(int index, ItemStack stack, Direction direction)
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
     {
         return index != 0;
     }
 
     @Override
-    public void onActivatorRailPass(int x, int y, int z, boolean receivingPower)
+    public void activateMinecart(int x, int y, int z, boolean receivingPower)
     {
         if(receivingPower == this.isBlocked())
         {
@@ -180,9 +168,9 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
     public void tick()
     {
         super.tick();
-        if(!this.world.isRemote && this.isAlive() && this.isBlocked())
+        if(!this.level.isClientSide && this.isAlive() && this.isBlocked())
         {
-            BlockPos pos = this.getPosition();
+            BlockPos pos = this.blockPosition();
             if(pos.equals(this.lastPosition))
             {
                 this.transferTicker--;
@@ -198,7 +186,7 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
                 if(this.captureDroppedItems())
                 {
                     this.setTransferTicker(4);
-                    this.markDirty();
+                    this.setChanged();
                 }
             }
         }
@@ -207,46 +195,46 @@ public class GoldenHopperMinecart extends ContainerMinecartEntity implements IHo
 
     private boolean captureDroppedItems()
     {
-        if(GoldenHopperTileEntity.pullItems(this))
+        if(GoldenHopperBlockEntity.pullItems(this.level, this))
         {
             return true;
         }
-        List<ItemEntity> list = this.world.getEntitiesWithinAABB(ItemEntity.class, this.getBoundingBox().grow(0.25D, 0.0D, 0.25D), EntityPredicates.IS_ALIVE);
+        List<ItemEntity> list = this.level.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.25D, 0.0D, 0.25D), EntitySelector.ENTITY_STILL_ALIVE);
         if(!list.isEmpty())
         {
-            GoldenHopperTileEntity.captureItemEntity(this, list.get(0));
+            GoldenHopperBlockEntity.captureItemEntity(this, list.get(0));
         }
         return false;
     }
 
     @Override
-    protected void writeAdditional(CompoundNBT compound)
+    protected void addAdditionalSaveData(CompoundTag compound)
     {
-        super.writeAdditional(compound);
+        super.addAdditionalSaveData(compound);
         compound.putInt("TransferCooldown", this.transferTicker);
         compound.putBoolean("Enabled", this.blocked);
     }
 
     @Override
-    protected void readAdditional(CompoundNBT compound)
+    protected void readAdditionalSaveData(CompoundTag compound)
     {
-        super.readAdditional(compound);
+        super.readAdditionalSaveData(compound);
         this.transferTicker = compound.getInt("TransferCooldown");
         this.blocked = !compound.contains("Enabled") || compound.getBoolean("Enabled");
     }
 
     @Override
-    public void killMinecart(DamageSource source)
+    public void destroy(DamageSource source)
     {
-        super.killMinecart(source);
-        if(this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS))
+        super.destroy(source);
+        if(this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS))
         {
-            this.entityDropItem(ModBlocks.GOLDEN_HOPPER.get());
+            this.spawnAtLocation(ModBlocks.GOLDEN_HOPPER.get());
         }
     }
 
     @Override
-    public IPacket<?> createSpawnPacket()
+    public Packet<?> getAddEntityPacket()
     {
         return NetworkHooks.getEntitySpawningPacket(this);
     }

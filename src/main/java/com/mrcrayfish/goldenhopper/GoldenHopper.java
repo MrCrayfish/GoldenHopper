@@ -19,7 +19,7 @@ public class GoldenHopper
         ModBlocks.REGISTER.register(bus);
         ModItems.REGISTER.register(bus);
         ModEntities.REGISTER.register(bus);
-        ModTileEntities.REGISTER.register(bus);
+        ModBlockEntities.REGISTER.register(bus);
         ModContainers.REGISTER.register(bus);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onClientSetup);
     }

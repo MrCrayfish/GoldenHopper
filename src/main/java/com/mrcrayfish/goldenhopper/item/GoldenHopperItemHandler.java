@@ -1,7 +1,7 @@
 package com.mrcrayfish.goldenhopper.item;
 
-import com.mrcrayfish.goldenhopper.tileentity.GoldenHopperTileEntity;
-import net.minecraft.item.ItemStack;
+import com.mrcrayfish.goldenhopper.block.entity.GoldenHopperBlockEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nonnull;
@@ -11,9 +11,9 @@ import javax.annotation.Nonnull;
  */
 public class GoldenHopperItemHandler extends SidedInvWrapper
 {
-    private final GoldenHopperTileEntity hopper;
+    private final GoldenHopperBlockEntity hopper;
 
-    public GoldenHopperItemHandler(GoldenHopperTileEntity hopper)
+    public GoldenHopperItemHandler(GoldenHopperBlockEntity hopper)
     {
         super(hopper, null);
         this.hopper = hopper;
