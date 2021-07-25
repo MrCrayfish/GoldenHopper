@@ -40,6 +40,18 @@
         ]
       }
     },
+    "has_hopper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:hopper"
+            ]
+          }
+        ]
+      }
+    },
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
@@ -52,6 +64,7 @@
       "has_gold_ingot",
       "has_redstone",
       "has_comparator",
+      "has_hopper",
       "has_the_recipe"
     ]
   ]

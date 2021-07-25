@@ -22,15 +22,17 @@ public class RecipeGen extends RecipeProvider
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer)
     {
         ShapedRecipeBuilder.shaped(ModBlocks.GOLDEN_HOPPER.get())
-                .pattern("IRI")
                 .pattern("ICI")
+                .pattern("IHI")
                 .pattern("RIR")
                 .define('I', Tags.Items.INGOTS_GOLD)
                 .define('R', Items.REDSTONE)
+                .define('H', Items.HOPPER)
                 .define('C', Items.COMPARATOR)
                 .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                 .unlockedBy("has_redstone", has(Items.REDSTONE))
                 .unlockedBy("has_comparator", has(Items.COMPARATOR))
+                .unlockedBy("has_hopper", has(Items.HOPPER))
                 .save(consumer);
 
         ShapedRecipeBuilder.shaped(ModItems.GOLDEN_HOPPER_MINECART.get())

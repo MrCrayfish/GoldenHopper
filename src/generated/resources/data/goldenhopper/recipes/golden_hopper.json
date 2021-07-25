@@ -1,8 +1,8 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "IRI",
     "ICI",
+    "IHI",
     "RIR"
   ],
   "key": {
@@ -11,6 +11,9 @@
     },
     "R": {
       "item": "minecraft:redstone"
+    },
+    "H": {
+      "item": "minecraft:hopper"
     },
     "C": {
       "item": "minecraft:comparator"
