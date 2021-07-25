@@ -20,9 +20,8 @@ public class ClientHandler
     public static void init()
     {
         MenuScreens.register(ModContainers.GOLDEN_HOPPER.get(), GoldenHopperScreen::new);
-        EntityRenderers.register(ModEntities.GOLDEN_HOPPER_MINECART.get(), context -> {
-            return new MinecartRenderer<>(context, ModelLayers.HOPPER_MINECART);
-        });
+        EntityRenderers.register(ModEntities.GOLDEN_HOPPER_MINECART.get(), context ->
+                new MinecartRenderer<>(context, ModelLayers.HOPPER_MINECART));
     }
 
     public static void handleGoldenHopperMinecartSpawn(Entity entity)

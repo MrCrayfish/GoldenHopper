@@ -5,7 +5,6 @@ import com.mrcrayfish.goldenhopper.init.ModBlocks;
 import com.mrcrayfish.goldenhopper.init.ModEntities;
 import com.mrcrayfish.goldenhopper.init.ModItems;
 import com.mrcrayfish.goldenhopper.inventory.container.GoldenHopperContainer;
-import com.mrcrayfish.goldenhopper.block.entity.GoldenHopperBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -59,19 +58,9 @@ public class GoldenHopperMinecart extends AbstractMinecartContainer implements H
         this.blocked = blocked;
     }
 
-    public int getTransferTicker()
-    {
-        return transferTicker;
-    }
-
     public void setTransferTicker(int transferTicker)
     {
         this.transferTicker = transferTicker;
-    }
-
-    public BlockPos getLastPosition()
-    {
-        return lastPosition;
     }
 
     public boolean canTransfer()

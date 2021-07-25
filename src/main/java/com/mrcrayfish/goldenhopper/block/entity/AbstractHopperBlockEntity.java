@@ -176,13 +176,13 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         }
     }
 
-    private static boolean attemptTransferItems(Level level, BlockPos pos, BlockState state, AbstractHopperBlockEntity hopper, Supplier<Boolean> supplier)
+    private static void attemptTransferItems(Level level, BlockPos pos, BlockState state, AbstractHopperBlockEntity hopper, Supplier<Boolean> supplier)
     {
         if(level.isClientSide())
-            return false;
+            return;
 
         if(hopper.isCoolingDown() || !hopper.getBlockState().getValue(BlockStateProperties.ENABLED))
-            return false;
+            return;
 
         //TODO THIS MAY NOT WORK
         boolean pushedItems = !hopper.isEmpty() && transferItems(level, pos, state, hopper);
@@ -191,13 +191,14 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         {
             hopper.setTransferCooldown(hopper.transferSpeed);
             hopper.setChanged();
-            return true;
         }
-        return false;
     }
 
     private static boolean transferItems(Level level, BlockPos pos, BlockState state, AbstractHopperBlockEntity hopper)
     {
+        if(transferItemsToCaps(level, state, hopper))
+            return true;
+
         Container container = getTargetContainer(level, pos, state);
         if(container == null)
             return false;
@@ -311,7 +312,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         return false;
     }
 
-    private static boolean insertHook(Level level, BlockState state, AbstractHopperBlockEntity hopper)
+    private static boolean transferItemsToCaps(Level level, BlockState state, AbstractHopperBlockEntity hopper)
     {
         Optional<Pair<IItemHandler, Object>> optional = getItemHandler(level, state, hopper);
         return optional.map(pair ->
@@ -359,14 +360,6 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         return IntStream.range(0, handler.getSlots()).noneMatch(index -> {
             ItemStack stack = handler.getStackInSlot(index);
             return stack.isEmpty() || stack.getCount() < handler.getSlotLimit(index);
-        });
-    }
-
-    private static boolean isEmpty(IItemHandler handler)
-    {
-        return IntStream.range(0, handler.getSlots()).noneMatch(index -> {
-            ItemStack stack = handler.getStackInSlot(index);
-            return stack.isEmpty();
         });
     }
 

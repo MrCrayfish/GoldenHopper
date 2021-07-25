@@ -1,7 +1,11 @@
 package com.mrcrayfish.goldenhopper;
 
 import com.mrcrayfish.goldenhopper.client.ClientHandler;
-import com.mrcrayfish.goldenhopper.init.*;
+import com.mrcrayfish.goldenhopper.init.ModBlockEntities;
+import com.mrcrayfish.goldenhopper.init.ModBlocks;
+import com.mrcrayfish.goldenhopper.init.ModContainers;
+import com.mrcrayfish.goldenhopper.init.ModEntities;
+import com.mrcrayfish.goldenhopper.init.ModItems;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;

@@ -25,12 +25,12 @@ public class GoldenHopperItemHandler extends SidedInvWrapper
     {
         if(simulate)
         {
-            return super.insertItem(slot, stack, simulate);
+            return super.insertItem(slot, stack, true);
         }
 
         boolean wasEmpty = this.inv.isEmpty();
         int originalStackSize = stack.getCount();
-        stack = super.insertItem(slot, stack, simulate);
+        stack = super.insertItem(slot, stack, false);
         if(wasEmpty && originalStackSize > stack.getCount())
         {
             if(!this.hopper.isCoolingDown())
