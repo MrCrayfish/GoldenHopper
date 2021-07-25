@@ -1,5 +1,6 @@
 package com.mrcrayfish.goldenhopper.entity;
 
+import com.mrcrayfish.goldenhopper.block.entity.AbstractHopperBlockEntity;
 import com.mrcrayfish.goldenhopper.init.ModBlocks;
 import com.mrcrayfish.goldenhopper.init.ModEntities;
 import com.mrcrayfish.goldenhopper.init.ModItems;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.Hopper;
+import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
@@ -195,14 +197,14 @@ public class GoldenHopperMinecart extends AbstractMinecartContainer implements H
 
     private boolean captureDroppedItems()
     {
-        if(GoldenHopperBlockEntity.pullItems(this.level, this))
+        if(HopperBlockEntity.suckInItems(this.level, this))
         {
             return true;
         }
         List<ItemEntity> list = this.level.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.25D, 0.0D, 0.25D), EntitySelector.ENTITY_STILL_ALIVE);
         if(!list.isEmpty())
         {
-            GoldenHopperBlockEntity.captureItemEntity(this, list.get(0));
+            AbstractHopperBlockEntity.addItemEntity(this, list.get(0));
         }
         return false;
     }

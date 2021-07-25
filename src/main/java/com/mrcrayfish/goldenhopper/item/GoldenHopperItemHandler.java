@@ -33,7 +33,7 @@ public class GoldenHopperItemHandler extends SidedInvWrapper
         stack = super.insertItem(slot, stack, simulate);
         if(wasEmpty && originalStackSize > stack.getCount())
         {
-            if(!this.hopper.mayTransfer())
+            if(!this.hopper.isCoolingDown())
             {
                 this.hopper.setTransferCooldown(8);
             }
