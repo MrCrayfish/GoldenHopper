@@ -1,8 +1,8 @@
 package com.mrcrayfish.goldenhopper.world.level.block;
 
+import com.mrcrayfish.goldenhopper.init.ModBlockEntities;
 import com.mrcrayfish.goldenhopper.world.level.block.entity.AbstractHopperBlockEntity;
 import com.mrcrayfish.goldenhopper.world.level.block.entity.GoldenHopperBlockEntity;
-import com.mrcrayfish.goldenhopper.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
