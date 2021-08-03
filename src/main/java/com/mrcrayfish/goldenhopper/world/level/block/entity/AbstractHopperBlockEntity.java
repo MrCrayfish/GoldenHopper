@@ -207,8 +207,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         if(isContainerFull(container, direction))
             return false;
 
-        int[] slots = hopper.getTransferableSlots();
-        for(int index : slots)
+        for(int index : hopper.getTransferableSlots())
         {
             ItemStack stack = hopper.getItem(index);
             if(stack.isEmpty())
@@ -325,22 +324,19 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
             if(!(value instanceof Container container))
                 return false;
 
-            int[] slots = hopper.getTransferableSlots();
-            for(int i = 0; i < slots.length; i++)
+            for(int index : hopper.getTransferableSlots())
             {
-                int index = slots[i];
                 ItemStack stack = hopper.getItem(index);
-                if(stack.isEmpty())
-                    continue;
+                if(stack.isEmpty()) continue;
 
-                ItemStack copyStack = hopper.getItem(i).copy();
-                ItemStack resultStack = attemptMoveStackToContainer(hopper, container, hopper.removeItem(i, 1), state.getValue(BlockStateProperties.FACING_HOPPER));
+                ItemStack copyStack = hopper.getItem(index).copy();
+                ItemStack resultStack = attemptMoveStackToContainer(hopper, container, hopper.removeItem(index, 1), state.getValue(BlockStateProperties.FACING_HOPPER));
                 if(resultStack.isEmpty())
                 {
                     container.setChanged();
                     return true;
                 }
-                hopper.setItem(i, copyStack);
+                hopper.setItem(index, copyStack);
             }
             return false;
         }).orElse(false);
