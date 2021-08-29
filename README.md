@@ -8,7 +8,7 @@ Golden Hopper is a very simple mod that adds, as the mod name states, golden hop
 
 ### Crafting:
 
-![Golden Hopper Crafting](https://i.imgur.com/RNBhcTD.png)
+![Golden Hopper Crafting](https://i.imgur.com/5T8VaXg.png)
 ![Golden Hopper Minecart Crafting](https://i.imgur.com/RzagPTS.png)
 
 ### Screenshots:
