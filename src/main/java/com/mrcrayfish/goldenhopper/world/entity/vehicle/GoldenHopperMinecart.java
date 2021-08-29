@@ -23,7 +23,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -193,7 +196,9 @@ public class GoldenHopperMinecart extends AbstractMinecartContainer implements H
         List<ItemEntity> list = this.level.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.25D, 0.0D, 0.25D), EntitySelector.ENTITY_STILL_ALIVE);
         if(!list.isEmpty())
         {
-            AbstractHopperBlockEntity.addItemEntity(this, list.get(0));
+            this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> {
+                AbstractHopperBlockEntity.addItemEntity(this, handler, list.get(0));
+            });
         }
         return false;
     }

@@ -22,12 +22,15 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
@@ -213,7 +216,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
             if(stack.isEmpty())
                 continue;
             ItemStack copyStack = stack.copy();
-            ItemStack resultStack = attemptMoveStackToContainer(hopper, container, hopper.removeItem(index, 1), direction);
+            ItemStack resultStack = attemptMoveStackToContainer(hopper, container, new InvWrapper(container), hopper.removeItem(index, 1), direction);
             if(resultStack.isEmpty())
             {
                 container.setChanged();
@@ -224,37 +227,46 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         return false;
     }
 
-    private static ItemStack attemptMoveStackToContainer(@Nullable Container source, Container target, ItemStack stack, @Nullable Direction direction)
+    private static ItemStack attemptMoveStackToContainer(@Nullable Container source, Object target, IItemHandler handler, ItemStack stack, @Nullable Direction direction)
     {
         if(target instanceof WorldlyContainer worldlyContainer && direction != null)
         {
             int[] slots = worldlyContainer.getSlotsForFace(direction);
             for(int i = 0; i < slots.length && !stack.isEmpty(); i++)
             {
-                stack = attemptMoveStackToSlot(source, target, stack, slots[i], direction);
+                stack = attemptMoveStackToSlot(source, target, handler, stack, slots[i], direction);
             }
             return stack;
         }
 
-        for(int i = 0; i < target.getContainerSize() && !stack.isEmpty(); ++i)
+        if(target instanceof Container container)
         {
-            stack = attemptMoveStackToSlot(source, target, stack, i, direction);
+            for(int i = 0; i < container.getContainerSize() && !stack.isEmpty(); ++i)
+            {
+                stack = attemptMoveStackToSlot(source, target, handler, stack, i, direction);
+            }
+            return stack;
+        }
+
+        for(int i = 0; i < handler.getSlots() && !stack.isEmpty(); i++)
+        {
+            stack = attemptMoveStackToSlot(source, target, handler, stack, i, direction);
         }
 
         return stack;
     }
 
-    private static ItemStack attemptMoveStackToSlot(@Nullable Container source, Container target, ItemStack stack, int index, @Nullable Direction direction)
+    private static ItemStack attemptMoveStackToSlot(@Nullable Container source, Object target, IItemHandler handler, ItemStack stack, int index, @Nullable Direction direction)
     {
         if(!canPlaceInContainerSlot(target, stack, index, direction))
             return stack;
 
         boolean moved = false;
-        boolean targetEmpty = target.isEmpty();
-        ItemStack targetStack = target.getItem(index);
+        boolean targetWasEmpty = !isItemHandlerEmpty(handler);
+        ItemStack targetStack = handler.getStackInSlot(index);
         if(targetStack.isEmpty())
         {
-            target.setItem(index, stack);
+            handler.insertItem(index, stack, false);
             stack = ItemStack.EMPTY;
             moved = true;
         }
@@ -268,7 +280,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
 
         if(moved)
         {
-            if(targetEmpty)
+            if(targetWasEmpty)
             {
                 int cooldown = 0;
                 if(target instanceof HopperBlockEntity hopper && !hopper.isOnCustomCooldown())
@@ -284,7 +296,10 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
                     hopper.setTransferCooldown(hopper.transferSpeed - cooldown);
                 }
             }
-            target.setChanged();
+            if(target instanceof Container container)
+            {
+                container.setChanged();
+            }
         }
 
         return stack;
@@ -294,14 +309,21 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
     {
         if(entity instanceof ItemEntity && Shapes.joinIsNotEmpty(Shapes.create(entity.getBoundingBox().move(-pos.getX(), -pos.getY(), -pos.getZ())), hopper.getSuckShape(), BooleanOp.AND))
         {
-            attemptTransferItems(level, pos, state, hopper, () -> addItemEntity(hopper, (ItemEntity) entity));
+
+            attemptTransferItems(level, pos, state, hopper, () -> {
+                AtomicBoolean returnValue = new AtomicBoolean(false);
+                hopper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> {
+                    returnValue.set(addItemEntity(hopper, handler, (ItemEntity) entity));
+                });
+                return returnValue.get();
+            });
         }
     }
 
-    public static boolean addItemEntity(Container container, ItemEntity entity)
+    public static boolean addItemEntity(Container container, IItemHandler handler, ItemEntity entity)
     {
         ItemStack copyStack = entity.getItem().copy();
-        ItemStack resultStack = attemptMoveStackToContainer(null, container, copyStack, null);
+        ItemStack resultStack = attemptMoveStackToContainer(null, container, handler, copyStack, null);
         if(resultStack.isEmpty())
         {
             entity.discard();
@@ -321,19 +343,17 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
                 return false;
 
             Object value = pair.getValue();
-            if(!(value instanceof Container container))
-                return false;
-
             for(int index : hopper.getTransferableSlots())
             {
                 ItemStack stack = hopper.getItem(index);
                 if(stack.isEmpty()) continue;
 
                 ItemStack copyStack = hopper.getItem(index).copy();
-                ItemStack resultStack = attemptMoveStackToContainer(hopper, container, hopper.removeItem(index, 1), state.getValue(BlockStateProperties.FACING_HOPPER));
+                ItemStack resultStack = attemptMoveStackToContainer(hopper, value, handler, hopper.removeItem(index, 1), state.getValue(BlockStateProperties.FACING_HOPPER));
                 if(resultStack.isEmpty())
                 {
-                    container.setChanged();
+                    if(value instanceof Container container)
+                        container.setChanged();
                     return true;
                 }
                 hopper.setItem(index, copyStack);
@@ -359,9 +379,19 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         });
     }
 
-    private static boolean canPlaceInContainerSlot(Container container, ItemStack stack, int index, @Nullable Direction direction)
+    private static boolean isItemHandlerEmpty(IItemHandler handler)
     {
-        return container.canPlaceItem(index, stack) && (!(container instanceof WorldlyContainer) || ((WorldlyContainer) container).canPlaceItemThroughFace(index, stack, direction));
+        return IntStream.range(0, handler.getSlots()).noneMatch(index -> {
+            ItemStack stack = handler.getStackInSlot(index);
+            return stack.isEmpty();
+        });
+    }
+
+    private static boolean canPlaceInContainerSlot(Object target, ItemStack stack, int index, @Nullable Direction direction)
+    {
+        if(target instanceof Container container)
+            return container.canPlaceItem(index, stack) && (!(container instanceof WorldlyContainer) || ((WorldlyContainer) container).canPlaceItemThroughFace(index, stack, direction));
+        return true;
     }
 
     private static boolean canMergeStacks(ItemStack source, ItemStack target)
