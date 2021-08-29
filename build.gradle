@@ -60,8 +60,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.17.1-37.0.8'
-    implementation('cpw.mods:securejarhandler') { version { strictly '0.9.46' } }
+    minecraft 'net.minecraftforge:forge:1.17.1-37.0.45'
 }
 
 jar {
