@@ -5,9 +5,9 @@ import com.mrcrayfish.goldenhopper.client.ClientHandler;
 import com.mrcrayfish.goldenhopper.world.entity.vehicle.GoldenHopperMinecart;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Author: MrCrayfish
