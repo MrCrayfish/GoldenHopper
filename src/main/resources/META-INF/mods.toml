@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[37,)"
+loaderVersion="[38,)"
 license="GNU General Public Lisence 3.0"
 issueTrackerURL="https://github.com/MrCrayfish/GoldenHopper/issues"
 
@@ -17,13 +17,13 @@ description="Simply adds a new golden hopper variant that can filter items, noth
 [[dependencies.goldenhopper]]
     modId="forge"
     mandatory=true
-    versionRange="[37,)"
+    versionRange="[38,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.goldenhopper]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.17.1,1.18)"
+    versionRange="[1.18,1.19)"
     ordering="NONE"
     side="BOTH"
 
