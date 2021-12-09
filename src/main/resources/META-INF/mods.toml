@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/MrCrayfish/GoldenHopper/issues"
 
 [[mods]]
 modId="goldenhopper"
-version="1.2.4"
+version="1.2.5"
 displayName="Golden Hopper"
 updateJSONURL="https://mrcrayfish.com/modupdatejson?id=goldenhopper"
 displayURL="http://mrcrayfish.com/mods?id=goldenhopper"
