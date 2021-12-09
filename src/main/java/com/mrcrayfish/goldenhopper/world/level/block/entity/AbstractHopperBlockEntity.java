@@ -136,15 +136,14 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound)
+    protected void saveAdditional(CompoundTag tag)
     {
-        super.save(compound);
-        if(!this.trySaveLootTable(compound))
+        super.saveAdditional(tag);
+        if(!this.trySaveLootTable(tag))
         {
-            ContainerHelper.saveAllItems(compound, this.items);
+            ContainerHelper.saveAllItems(tag, this.items);
         }
-        compound.putInt("TransferCooldown", this.transferCooldown);
-        return compound;
+        tag.putInt("TransferCooldown", this.transferCooldown);
     }
 
     @Override
