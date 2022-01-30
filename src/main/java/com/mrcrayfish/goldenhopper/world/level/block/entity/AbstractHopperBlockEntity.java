@@ -266,7 +266,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         if(targetStack.isEmpty())
         {
             stack = handler.insertItem(index, stack, false);
-            moved = true;
+            moved = stack.isEmpty();
         }
         else if(canMergeStacks(stack, targetStack))
         {
