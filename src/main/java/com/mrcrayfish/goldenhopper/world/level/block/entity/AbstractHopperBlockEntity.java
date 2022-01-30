@@ -215,7 +215,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
             if(stack.isEmpty())
                 continue;
             ItemStack copyStack = stack.copy();
-            ItemStack resultStack = attemptMoveStackToContainer(hopper, container, new InvWrapper(container), hopper.removeItem(index, 1), direction);
+            ItemStack resultStack = HopperBlockEntity.addItem(hopper, container, hopper.removeItem(index, 1), direction);
             if(resultStack.isEmpty())
             {
                 container.setChanged();
@@ -233,7 +233,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
             int[] slots = worldlyContainer.getSlotsForFace(direction);
             for(int i = 0; i < slots.length && !stack.isEmpty(); i++)
             {
-                stack = attemptMoveStackToSlot(source, target, handler, stack, slots[i], direction);
+                stack = attemptMoveStackToSlot(source, target, handler, stack, i, direction);
             }
             return stack;
         }
@@ -265,8 +265,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
         ItemStack targetStack = handler.getStackInSlot(index);
         if(targetStack.isEmpty())
         {
-            handler.insertItem(index, stack, false);
-            stack = ItemStack.EMPTY;
+            stack = handler.insertItem(index, stack, false);
             moved = true;
         }
         else if(canMergeStacks(stack, targetStack))
@@ -345,10 +344,12 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
             for(int index : hopper.getTransferableSlots())
             {
                 ItemStack stack = hopper.getItem(index);
-                if(stack.isEmpty()) continue;
+                if(stack.isEmpty())
+                    continue;
 
                 ItemStack copyStack = hopper.getItem(index).copy();
-                ItemStack resultStack = attemptMoveStackToContainer(hopper, value, handler, hopper.removeItem(index, 1), state.getValue(BlockStateProperties.FACING_HOPPER));
+                ItemStack insertStack = hopper.removeItem(index, 1);
+                ItemStack resultStack = attemptMoveStackToContainer(hopper, value, handler, insertStack, state.getValue(BlockStateProperties.FACING_HOPPER).getOpposite());
                 if(resultStack.isEmpty())
                 {
                     if(value instanceof Container container)
