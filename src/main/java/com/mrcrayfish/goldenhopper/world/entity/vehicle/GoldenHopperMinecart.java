@@ -94,6 +94,12 @@ public class GoldenHopperMinecart extends AbstractMinecartContainer implements H
     }
 
     @Override
+    public ItemStack getPickResult()
+    {
+        return new ItemStack(ModItems.GOLDEN_HOPPER_MINECART.get());
+    }
+
+    @Override
     public Type getMinecartType()
     {
         return Type.HOPPER;
