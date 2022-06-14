@@ -18,6 +18,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.vehicle.AbstractMinecartContainer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -90,9 +91,9 @@ public class GoldenHopperMinecart extends AbstractMinecartContainer implements H
     }
 
     @Override
-    public ItemStack getCartItem()
+    protected Item getDropItem()
     {
-        return new ItemStack(ModItems.GOLDEN_HOPPER_MINECART.get());
+        return ModItems.GOLDEN_HOPPER_MINECART.get();
     }
 
     @Override

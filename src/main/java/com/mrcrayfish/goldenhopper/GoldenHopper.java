@@ -41,7 +41,7 @@ public class GoldenHopper
     private void onGatherData(GatherDataEvent event)
     {
         DataGenerator generator = event.getGenerator();
-        generator.addProvider(new RecipeGen(generator));
-        generator.addProvider(new LootTableGen(generator));
+        generator.addProvider(event.includeServer(), new RecipeGen(generator));
+        generator.addProvider(event.includeServer(), new LootTableGen(generator));
     }
 }

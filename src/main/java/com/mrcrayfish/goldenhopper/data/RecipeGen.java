@@ -2,14 +2,10 @@ package com.mrcrayfish.goldenhopper.data;
 
 import com.mrcrayfish.goldenhopper.init.ModBlocks;
 import com.mrcrayfish.goldenhopper.init.ModItems;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 
@@ -47,10 +43,5 @@ public class RecipeGen extends RecipeProvider
                 .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
                 .unlockedBy("has_minecart", has(Items.MINECART))
                 .save(consumer);
-    }
-
-    protected static InventoryChangeTrigger.TriggerInstance has(TagKey<Item> key)
-    {
-        return inventoryTrigger(ItemPredicate.Builder.item().of(key).build());
     }
 }
