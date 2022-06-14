@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.util.Mth;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntitySelector;
@@ -28,6 +29,7 @@ import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -237,5 +239,17 @@ public class GoldenHopperMinecart extends AbstractMinecartContainer implements H
     public Packet<?> getAddEntityPacket()
     {
         return NetworkHooks.getEntitySpawningPacket(this);
+    }
+
+    @Override
+    public int getComparatorLevel()
+    {
+        float filled = IntStream.range(1, this.getContainerSize())
+                .mapToObj(this::getItem)
+                .filter(stack -> !stack.isEmpty())
+                .map(stack -> stack.getCount() / (float) Math.min(this.getMaxStackSize(), stack.getMaxStackSize()))
+                .reduce(0F, Float::sum);
+        filled /= (this.getContainerSize() - 1.0F);
+        return Mth.floor(filled * 14.0F) + (filled > 0 ? 1 : 0);
     }
 }
