@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public class ModBlockEntities
 {
-    public static final DeferredRegister<BlockEntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Reference.MOD_ID);
+    public static final DeferredRegister<BlockEntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Reference.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<GoldenHopperBlockEntity>> GOLDEN_HOPPER = register("golden_hopper", GoldenHopperBlockEntity::new, () -> new Block[]{ModBlocks.GOLDEN_HOPPER.get()});
 

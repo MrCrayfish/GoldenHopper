@@ -93,7 +93,7 @@ public abstract class AbstractHopperBlock extends BaseEntityBlock
         {
             if(level.getBlockEntity(pos) instanceof AbstractHopperBlockEntity blockEntity)
             {
-                NetworkHooks.openGui((ServerPlayer) player, blockEntity);
+                NetworkHooks.openScreen((ServerPlayer) player, blockEntity);
                 player.awardStat(Stats.INSPECT_HOPPER);
             }
         }

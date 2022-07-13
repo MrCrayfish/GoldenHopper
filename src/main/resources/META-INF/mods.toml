@@ -17,7 +17,7 @@ description="Simply adds a new golden hopper variant that can filter items, noth
 [[dependencies.goldenhopper]]
     modId="forge"
     mandatory=true
-    versionRange="[41.0.27,)"
+    versionRange="[41.0.94,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.goldenhopper]]
