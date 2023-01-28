@@ -22,10 +22,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.VanillaInventoryCodeHooks;
-import net.minecraftforge.items.wrapper.InvWrapper;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -310,7 +309,7 @@ public abstract class AbstractHopperBlockEntity extends RandomizableContainerBlo
 
             attemptTransferItems(level, pos, state, hopper, () -> {
                 AtomicBoolean returnValue = new AtomicBoolean(false);
-                hopper.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> {
+                hopper.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(handler -> {
                     returnValue.set(addItemEntity(hopper, handler, (ItemEntity) entity));
                 });
                 return returnValue.get();
