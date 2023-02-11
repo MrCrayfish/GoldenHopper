@@ -1,9 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A",
-    "B"
-  ],
+  "category": "misc",
   "key": {
     "A": {
       "item": "goldenhopper:golden_hopper"
@@ -12,6 +9,10 @@
       "item": "minecraft:minecart"
     }
   },
+  "pattern": [
+    "A",
+    "B"
+  ],
   "result": {
     "item": "goldenhopper:golden_hopper_minecart"
   }

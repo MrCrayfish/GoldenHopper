@@ -1,24 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ICI",
-    "IHI",
-    "RIR"
-  ],
+  "category": "redstone",
   "key": {
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    },
     "I": {
       "tag": "forge:ingots/gold"
     },
     "R": {
       "item": "minecraft:redstone"
-    },
-    "H": {
-      "item": "minecraft:hopper"
-    },
-    "C": {
-      "item": "minecraft:comparator"
     }
   },
+  "pattern": [
+    "ICI",
+    "IHI",
+    "RIR"
+  ],
   "result": {
     "item": "goldenhopper:golden_hopper"
   }

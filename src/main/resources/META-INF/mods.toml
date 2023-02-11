@@ -1,6 +1,6 @@
 modLoader="javafml"
-loaderVersion="[39,)"
-license="GNU General Public Lisence 3.0"
+loaderVersion="[44,)"
+license="GNU General Public License 3.0"
 issueTrackerURL="https://github.com/MrCrayfish/GoldenHopper/issues"
 
 [[mods]]
@@ -8,7 +8,7 @@ modId="goldenhopper"
 version="1.2.8"
 displayName="Golden Hopper"
 updateJSONURL="https://mrcrayfish.com/modupdatejson?id=goldenhopper"
-displayURL="http://mrcrayfish.com/mods?id=goldenhopper"
+displayURL="https://mrcrayfish.com/mods?id=goldenhopper"
 logoFile="goldenhopper.png"
 credits="@Moonshiner99 on Twitter for the mod idea. Pois1x for improved textures!"
 authors="MrCrayfish"
@@ -17,13 +17,13 @@ description="Simply adds a new golden hopper variant that can filter items, noth
 [[dependencies.goldenhopper]]
     modId="forge"
     mandatory=true
-    versionRange="[41.0.94,)"
+    versionRange="[44.0.36,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.goldenhopper]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19,1.20)"
+    versionRange="[1.19.3,1.20)"
     ordering="NONE"
     side="BOTH"
 

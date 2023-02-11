@@ -3,7 +3,6 @@ package com.mrcrayfish.goldenhopper.init;
 import com.mrcrayfish.goldenhopper.Reference;
 import com.mrcrayfish.goldenhopper.world.level.block.GoldenHopperBlock;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Material;
@@ -26,7 +25,7 @@ public class ModBlocks
 
     private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> block)
     {
-        return register(id, block, block1 -> new BlockItem(block1, new Item.Properties().tab(CreativeModeTab.TAB_REDSTONE)));
+        return register(id, block, block1 -> new BlockItem(block1, new Item.Properties()));
     }
 
     private static <T extends Block> RegistryObject<T> register(String id, Supplier<T> block, @Nullable Function<T, BlockItem> supplier)

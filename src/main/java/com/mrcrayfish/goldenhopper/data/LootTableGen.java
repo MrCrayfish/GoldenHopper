@@ -1,40 +1,36 @@
 package com.mrcrayfish.goldenhopper.data;
 
-import com.google.common.collect.ImmutableList;
-import com.mojang.datafixers.util.Pair;
 import com.mrcrayfish.goldenhopper.Reference;
 import com.mrcrayfish.goldenhopper.init.ModBlocks;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.packs.VanillaLootTableProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LootTableGen extends LootTableProvider
 {
-    private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> tables = ImmutableList.of(Pair.of(BlockProvider::new, LootContextParamSets.BLOCK));
+    private final List<SubProviderEntry> tables = List.of(new LootTableProvider.SubProviderEntry(BlockSubProvider::new, LootContextParamSets.BLOCK));
 
-    public LootTableGen(DataGenerator generator)
+    public LootTableGen(PackOutput output)
     {
-        super(generator);
+        super(output, Set.of(), VanillaLootTableProvider.create(output).getTables());
     }
 
     @Override
-    public List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables()
+    public List<SubProviderEntry> getTables()
     {
         return this.tables;
     }
@@ -42,10 +38,15 @@ public class LootTableGen extends LootTableProvider
     @Override
     protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext context) {}
 
-    private static class BlockProvider extends BlockLoot
+    private static class BlockSubProvider extends BlockLootSubProvider
     {
+        private BlockSubProvider()
+        {
+            super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+        }
+
         @Override
-        protected void addTables()
+        protected void generate()
         {
             this.dropSelf(ModBlocks.GOLDEN_HOPPER.get());
         }
