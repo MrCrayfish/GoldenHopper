@@ -17,13 +17,13 @@ description="Simply adds a new golden hopper variant that can filter items, noth
 [[dependencies.goldenhopper]]
     modId="forge"
     mandatory=true
-    versionRange="[44.0.36,)"
+    versionRange="[45,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.goldenhopper]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.3,1.20)"
+    versionRange="[1.19.4,1.20)"
     ordering="NONE"
     side="BOTH"
 

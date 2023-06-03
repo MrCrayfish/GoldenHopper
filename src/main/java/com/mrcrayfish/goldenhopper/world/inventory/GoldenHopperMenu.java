@@ -1,6 +1,7 @@
 package com.mrcrayfish.goldenhopper.world.inventory;
 
 import com.mrcrayfish.goldenhopper.init.ModContainers;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,7 +17,7 @@ public class GoldenHopperMenu extends AbstractContainerMenu
 {
     private final Container hopperInventory;
 
-    public GoldenHopperMenu(int windowId, Inventory playerInventory)
+    public GoldenHopperMenu(int windowId, Inventory playerInventory, FriendlyByteBuf data)
     {
         this(windowId, playerInventory, new SimpleContainer(6));
     }
