@@ -48,7 +48,7 @@ public class FabricGoldenHopperBlockEntity extends GoldenHopperBlockEntity
             double x = this.getLevelX() + direction.getStepX();
             double y = this.getLevelY() + direction.getStepY();
             double z = this.getLevelZ() + direction.getStepZ();
-            BlockPos pos = BlockPos.containing(x, y, z);
+            BlockPos pos = new BlockPos(x, y, z);
             this.cache = BlockApiCache.create(ItemStorage.SIDED, level, pos);
         }
         return this.cache;

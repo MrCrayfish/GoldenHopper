@@ -146,12 +146,6 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     }
 
     @Override
-    public boolean canTakeItem(Container container, int index, ItemStack stack)
-    {
-        return index != 0;
-    }
-
-    @Override
     public void activateMinecart(int x, int y, int z, boolean receivingPower)
     {
         if(receivingPower == this.isBlocked())
@@ -216,15 +210,5 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
         super.readAdditionalSaveData(compound);
         this.transferTicker = compound.getInt("TransferCooldown");
         this.blocked = !compound.contains("Enabled") || compound.getBoolean("Enabled");
-    }
-
-    @Override
-    public void destroy(DamageSource source)
-    {
-        super.destroy(source);
-        if(this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS))
-        {
-            this.spawnAtLocation(ModBlocks.GOLDEN_HOPPER.get());
-        }
     }
 }

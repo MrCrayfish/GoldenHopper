@@ -30,12 +30,6 @@ public class FabricGoldenHopperMinecart extends GoldenHopperMinecart
         return ModItems.GOLDEN_HOPPER_MINECART.get();
     }
 
-    /*@Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket()
-    {
-        return NetworkHooks.getEntitySpawningPacket(this);
-    }*/
-
     public int getComparatorLevel()
     {
         float filled = IntStream.range(1, this.getContainerSize())

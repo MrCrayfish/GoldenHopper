@@ -1,6 +1,6 @@
 package com.mrcrayfish.goldenhopper.datagen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 
 /**
@@ -8,13 +8,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
  */
 public class LootTableGen extends FabricBlockLootTableProvider
 {
-    protected LootTableGen(FabricDataOutput dataOutput)
+    protected LootTableGen(FabricDataGenerator generator)
     {
-        super(dataOutput);
+        super(generator);
     }
 
     @Override
-    public void generate()
+    protected void generateBlockLootTables()
     {
         CommonLootTableGen.generate(this::dropSelf);
     }

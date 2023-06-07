@@ -75,10 +75,4 @@ public class GoldenHopperBlockEntity extends AbstractHopperBlockEntity implement
     {
         return index != 0;
     }
-
-    @Override
-    public boolean canTakeItem(Container container, int index, ItemStack stack)
-    {
-        return index != 0;
-    }
 }

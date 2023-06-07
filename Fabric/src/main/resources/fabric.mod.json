@@ -29,7 +29,8 @@
         "fabricloader": ">=${fabric_loader_version}",
         "fabric": "*",
         "minecraft": "${minecraft_version}",
-        "java": ">=17"
+        "java": ">=17",
+        "framework": "${framework_version}"
     },
     "accessWidener": "${mod_id}.accesswidener",
     "custom": {

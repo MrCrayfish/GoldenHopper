@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "redstone",
   "key": {
     "C": {
       "item": "minecraft:comparator"
@@ -22,6 +21,5 @@
   ],
   "result": {
     "item": "goldenhopper:golden_hopper"
-  },
-  "show_notification": true
+  }
 }

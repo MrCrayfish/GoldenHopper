@@ -32,21 +32,18 @@ public class ForgeGoldenHopperMinecart extends GoldenHopperMinecart
         super(level, x, y, z);
     }
 
-    //TODO fabric version
     @Override
     protected Item getDropItem()
     {
         return ModItems.GOLDEN_HOPPER_MINECART.get();
     }
 
-    //TODO fabric version ???????
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket()
+    public Packet<?> getAddEntityPacket()
     {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    //TODO fabric version
     @Override
     public int getComparatorLevel()
     {

@@ -2,9 +2,8 @@ package com.mrcrayfish.goldenhopper.datagen;
 
 import com.mrcrayfish.goldenhopper.core.ModBlocks;
 import com.mrcrayfish.goldenhopper.core.ModItems;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.Items;
@@ -14,15 +13,15 @@ import java.util.function.Consumer;
 
 public class RecipeGen extends RecipeProvider
 {
-    public RecipeGen(PackOutput output)
+    public RecipeGen(DataGenerator generator)
     {
-        super(output);
+        super(generator);
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer)
+    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer)
     {
-        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.GOLDEN_HOPPER.get())
+        ShapedRecipeBuilder.shaped(ModBlocks.GOLDEN_HOPPER.get())
                 .pattern("ICI")
                 .pattern("IHI")
                 .pattern("RIR")
@@ -36,7 +35,7 @@ public class RecipeGen extends RecipeProvider
                 .unlockedBy("has_hopper", has(Items.HOPPER))
                 .save(consumer);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ModItems.GOLDEN_HOPPER_MINECART.get())
+        ShapedRecipeBuilder.shaped(ModItems.GOLDEN_HOPPER_MINECART.get())
                 .pattern("A")
                 .pattern("B")
                 .define('A', ModBlocks.GOLDEN_HOPPER.get())

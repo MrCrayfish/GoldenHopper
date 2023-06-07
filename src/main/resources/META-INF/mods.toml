@@ -1,32 +1,42 @@
 modLoader="javafml"
-loaderVersion="[44,)"
-license="GNU General Public License 3.0"
-issueTrackerURL="https://github.com/MrCrayfish/GoldenHopper/issues"
+loaderVersion="[39,)"
+license="${mod_license}"
+issueTrackerURL="${mod_issues}"
 
 [[mods]]
-modId="goldenhopper"
-version="1.3.0"
-displayName="Golden Hopper"
-updateJSONURL="https://mrcrayfish.com/modupdatejson?id=goldenhopper"
-displayURL="https://mrcrayfish.com/mods?id=goldenhopper"
-logoFile="goldenhopper.png"
-credits="@Moonshiner99 on Twitter for the mod idea. Pois1x for improved textures!"
-authors="MrCrayfish"
-description="Simply adds a new golden hopper variant that can filter items, nothing more!"
+    modId="${mod_id}"
+    version="${mod_version}"
+    displayName="${mod_name}"
+    updateJSONURL="https://mrcrayfish.com/api/modupdatejson/${mod_id}"
+    displayURL="${mod_homepage}"
+    logoFile="${mod_id}_banner.png"
+    logoBlur=false
+    authors="${mod_author}"
+    description="${mod_desc}"
+    credits="@Moonshiner99 on Twitter for the initial idea. Pois1x for improved textures!"
 
-[[dependencies.goldenhopper]]
+[[dependencies."${mod_id}"]]
     modId="forge"
     mandatory=true
-    versionRange="[45,)"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.goldenhopper]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.19.4,1.20)"
+    versionRange="[${forge_version},)"
     ordering="NONE"
     side="BOTH"
 
-[modproperties.goldenhopper]
-    catalogueItemIcon="goldenhopper:golden_hopper"
-    configuredBackground="minecraft:textures/block/gold_ore.png"
+[[dependencies."${mod_id}"]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[${minecraft_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies."${mod_id}"]]
+    modId="framework"
+    mandatory=true
+    versionRange="[${framework_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[modproperties."${mod_id}"]
+    catalogueImageIcon="${mod_id}_icon.png"
+    catalogueBackground="${mod_id}_background.png"
+    configuredBackground="minecraft:textures/block/stone.png"
