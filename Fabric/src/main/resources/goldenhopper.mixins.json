@@ -3,9 +3,9 @@
     "minVersion": "0.8",
     "package": "com.mrcrayfish.goldenhopper.mixin",
     "compatibilityLevel": "JAVA_17",
+    "refmap": "goldenhopper-refmap.json",
     "mixins": [
-        "DetectorRailBlockMixin",
-        "HopperBlockEntityMixin"
+        "DetectorRailBlockMixin"
     ],
     "injectors": {
         "defaultRequire": 1
