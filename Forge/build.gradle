@@ -96,7 +96,7 @@ processResources {
     from project(":Common").sourceSets.main.resources
     inputs.property "version", project.version
 
-    filesMatching("META-INF/mods.toml") {
+    filesMatching(["META-INF/mods.toml", "pack.mcmeta"]) {
         expand project.properties
     }
 }
