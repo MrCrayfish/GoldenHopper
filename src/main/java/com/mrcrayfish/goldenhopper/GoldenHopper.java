@@ -1,8 +1,8 @@
 package com.mrcrayfish.goldenhopper;
 
 import com.mrcrayfish.goldenhopper.client.ClientHandler;
-import com.mrcrayfish.goldenhopper.data.LootTableGen;
-import com.mrcrayfish.goldenhopper.data.RecipeGen;
+import com.mrcrayfish.goldenhopper.datagen.LootTableGen;
+import com.mrcrayfish.goldenhopper.datagen.RecipeGen;
 import com.mrcrayfish.goldenhopper.init.ModBlockEntities;
 import com.mrcrayfish.goldenhopper.init.ModBlocks;
 import com.mrcrayfish.goldenhopper.init.ModContainers;

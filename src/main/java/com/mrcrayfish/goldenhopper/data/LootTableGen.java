@@ -1,4 +1,4 @@
-package com.mrcrayfish.goldenhopper.data;
+package com.mrcrayfish.goldenhopper.datagen;
 
 import com.mrcrayfish.goldenhopper.Reference;
 import com.mrcrayfish.goldenhopper.init.ModBlocks;

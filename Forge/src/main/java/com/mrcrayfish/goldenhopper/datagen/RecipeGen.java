@@ -1,0 +1,48 @@
+package com.mrcrayfish.goldenhopper.datagen;
+
+import com.mrcrayfish.goldenhopper.core.ModBlocks;
+import com.mrcrayfish.goldenhopper.core.ModItems;
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
+
+import java.util.function.Consumer;
+
+public class RecipeGen extends RecipeProvider
+{
+    public RecipeGen(PackOutput output)
+    {
+        super(output);
+    }
+
+    @Override
+    protected void buildRecipes(Consumer<FinishedRecipe> consumer)
+    {
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModBlocks.GOLDEN_HOPPER.get())
+                .pattern("ICI")
+                .pattern("IHI")
+                .pattern("RIR")
+                .define('I', Tags.Items.INGOTS_GOLD)
+                .define('R', Items.REDSTONE)
+                .define('H', Items.HOPPER)
+                .define('C', Items.COMPARATOR)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .unlockedBy("has_redstone", has(Items.REDSTONE))
+                .unlockedBy("has_comparator", has(Items.COMPARATOR))
+                .unlockedBy("has_hopper", has(Items.HOPPER))
+                .save(consumer);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, ModItems.GOLDEN_HOPPER_MINECART.get())
+                .pattern("A")
+                .pattern("B")
+                .define('A', ModBlocks.GOLDEN_HOPPER.get())
+                .define('B', Items.MINECART)
+                .unlockedBy("has_gold_ingot", has(Tags.Items.INGOTS_GOLD))
+                .unlockedBy("has_minecart", has(Items.MINECART))
+                .save(consumer);
+    }
+}

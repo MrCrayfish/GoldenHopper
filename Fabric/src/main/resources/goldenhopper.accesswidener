@@ -1,0 +1,6 @@
+accessWidener v1 named
+accessible method net/minecraft/world/entity/vehicle/AbstractMinecart getDropItem ()Lnet/minecraft/world/item/Item;
+accessible method net/minecraft/world/level/block/entity/HopperBlockEntity isFullContainer (Lnet/minecraft/world/Container;Lnet/minecraft/core/Direction;)Z
+accessible method net/minecraft/world/level/block/entity/HopperBlockEntity setCooldown (I)V
+accessible method net/minecraft/world/level/block/entity/HopperBlockEntity isOnCustomCooldown ()Z
+accessible field net/minecraft/world/level/block/entity/HopperBlockEntity tickedGameTime J
