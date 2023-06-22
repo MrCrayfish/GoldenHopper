@@ -9,7 +9,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -43,9 +43,9 @@ public class GoldenHopper
         generator.addProvider(event.includeServer(), new BlockTagGen(output, event.getLookupProvider(), event.getExistingFileHelper()));
     }
 
-    private void onCreativeTabBuilding(CreativeModeTabEvent.BuildContents event)
+    private void onCreativeTabBuilding(BuildCreativeModeTabContentsEvent event)
     {
-        if(event.getTab().equals(CreativeModeTabs.REDSTONE_BLOCKS))
+        if(event.getTabKey().equals(CreativeModeTabs.REDSTONE_BLOCKS))
         {
             event.accept(ModItems.GOLDEN_HOPPER::get);
             event.accept(ModItems.GOLDEN_HOPPER_MINECART::get);

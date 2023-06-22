@@ -164,7 +164,7 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     public void tick()
     {
         super.tick();
-        if(!this.level.isClientSide && this.isAlive() && this.isBlocked())
+        if(!this.level().isClientSide && this.isAlive() && this.isBlocked())
         {
             BlockPos pos = this.blockPosition();
             if(pos.equals(this.lastPosition))
@@ -191,9 +191,9 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
 
     protected boolean captureDroppedItems()
     {
-        if(!HopperBlockEntity.suckInItems(this.level, this))
+        if(!HopperBlockEntity.suckInItems(this.level(), this))
         {
-            List<ItemEntity> list = this.level.getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.25D, 0.0D, 0.25D), EntitySelector.ENTITY_STILL_ALIVE);
+            List<ItemEntity> list = this.level().getEntitiesOfClass(ItemEntity.class, this.getBoundingBox().inflate(0.25D, 0.0D, 0.25D), EntitySelector.ENTITY_STILL_ALIVE);
             if(!list.isEmpty())
             {
                 return HopperBlockEntity.addItem(this, list.get(0));
@@ -222,7 +222,7 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     public void destroy(DamageSource source)
     {
         super.destroy(source);
-        if(this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS))
+        if(this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS))
         {
             this.spawnAtLocation(ModBlocks.GOLDEN_HOPPER.get());
         }
