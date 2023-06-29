@@ -4,8 +4,6 @@ import com.mrcrayfish.goldenhopper.core.ModBlocks;
 import com.mrcrayfish.goldenhopper.core.ModEntities;
 import com.mrcrayfish.goldenhopper.core.ModItems;
 import com.mrcrayfish.goldenhopper.world.inventory.GoldenHopperMenu;
-import com.mrcrayfish.goldenhopper.world.level.block.entity.AbstractHopperBlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
@@ -33,9 +31,10 @@ import java.util.stream.IntStream;
  */
 public abstract class GoldenHopperMinecart extends AbstractMinecartContainer implements Hopper, WorldlyContainer
 {
+    private static final int CONTAINER_SIZE = 6;
+    private static final int FILTER_SLOT_INDEX = 0;
+
     private boolean blocked = true;
-    private int transferTicker = -1;
-    private final BlockPos lastPosition = BlockPos.ZERO;
 
     public GoldenHopperMinecart(EntityType<?> type, Level level)
     {
@@ -55,16 +54,6 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     public void setBlocked(boolean blocked)
     {
         this.blocked = blocked;
-    }
-
-    public void setTransferTicker(int transferTicker)
-    {
-        this.transferTicker = transferTicker;
-    }
-
-    public boolean canTransfer()
-    {
-        return this.transferTicker > 0;
     }
 
     @Override
@@ -118,37 +107,37 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     @Override
     public int getContainerSize()
     {
-        return 6;
+        return CONTAINER_SIZE;
     }
 
     @Override
     public boolean canPlaceItem(int index, ItemStack stack)
     {
-        return index != 0 && (this.getItem(0).isEmpty() || stack.getItem() == this.getItem(0).getItem());
+        return index != FILTER_SLOT_INDEX && (this.getItem(FILTER_SLOT_INDEX).isEmpty() || stack.getItem() == this.getItem(FILTER_SLOT_INDEX).getItem());
     }
 
     @Override
     public int[] getSlotsForFace(Direction side)
     {
-        return IntStream.range(1, this.getContainerSize()).toArray();
+        return IntStream.range(0, this.getContainerSize()).filter(value -> value != FILTER_SLOT_INDEX).toArray();
     }
 
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction)
     {
-        return index != 0 && (this.getItem(0).isEmpty() || stack.getItem() == this.getItem(0).getItem());
+        return index != FILTER_SLOT_INDEX && (this.getItem(FILTER_SLOT_INDEX).isEmpty() || stack.getItem() == this.getItem(FILTER_SLOT_INDEX).getItem());
     }
 
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
     {
-        return index != 0;
+        return index != FILTER_SLOT_INDEX;
     }
 
     @Override
     public boolean canTakeItem(Container container, int index, ItemStack stack)
     {
-        return index != 0;
+        return index != FILTER_SLOT_INDEX;
     }
 
     @Override
@@ -164,29 +153,13 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     public void tick()
     {
         super.tick();
-        if(!this.level().isClientSide && this.isAlive() && this.isBlocked())
+        if(!this.level().isClientSide() && this.isAlive() && this.isBlocked())
         {
-            BlockPos pos = this.blockPosition();
-            if(pos.equals(this.lastPosition))
+            if(this.captureDroppedItems())
             {
-                this.transferTicker--;
-            }
-            else
-            {
-                this.setTransferTicker(0);
-            }
-
-            if(!this.canTransfer())
-            {
-                this.setTransferTicker(0);
-                if(this.captureDroppedItems())
-                {
-                    this.setTransferTicker(4);
-                    this.setChanged();
-                }
+                this.setChanged();
             }
         }
-
     }
 
     protected boolean captureDroppedItems()
@@ -206,7 +179,6 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     protected void addAdditionalSaveData(CompoundTag compound)
     {
         super.addAdditionalSaveData(compound);
-        compound.putInt("TransferCooldown", this.transferTicker);
         compound.putBoolean("Enabled", this.blocked);
     }
 
@@ -214,7 +186,6 @@ public abstract class GoldenHopperMinecart extends AbstractMinecartContainer imp
     protected void readAdditionalSaveData(CompoundTag compound)
     {
         super.readAdditionalSaveData(compound);
-        this.transferTicker = compound.getInt("TransferCooldown");
         this.blocked = !compound.contains("Enabled") || compound.getBoolean("Enabled");
     }
 

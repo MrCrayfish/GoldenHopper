@@ -1,11 +1,9 @@
 package com.mrcrayfish.goldenhopper.world.entity;
 
-import com.mrcrayfish.goldenhopper.Constants;
 import com.mrcrayfish.goldenhopper.util.StorageHelper;
 import com.mrcrayfish.goldenhopper.world.level.block.entity.AbstractHopperBlockEntity;
 import com.mrcrayfish.goldenhopper.world.level.block.entity.GoldenHopperBlockEntity;
 import net.fabricmc.fabric.api.lookup.v1.block.BlockApiCache;
-import net.fabricmc.fabric.api.lookup.v1.block.BlockApiLookup;
 import net.fabricmc.fabric.api.transfer.v1.item.InventoryStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -19,7 +17,6 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.apache.commons.lang3.tuple.Pair;
