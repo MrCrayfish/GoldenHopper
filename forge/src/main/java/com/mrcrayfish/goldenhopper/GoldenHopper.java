@@ -3,6 +3,7 @@ package com.mrcrayfish.goldenhopper;
 import com.mrcrayfish.goldenhopper.client.ClientHandler;
 import com.mrcrayfish.goldenhopper.core.ModItems;
 import com.mrcrayfish.goldenhopper.data.ForgeBlockTagGen;
+import com.mrcrayfish.goldenhopper.data.ForgeItemTagGen;
 import com.mrcrayfish.goldenhopper.data.ForgeLootTableGen;
 import com.mrcrayfish.goldenhopper.data.ForgeRecipeGen;
 import net.minecraft.core.HolderLookup;
@@ -44,7 +45,9 @@ public class GoldenHopper
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         generator.addProvider(event.includeServer(), new ForgeRecipeGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new ForgeLootTableGen(output, lookupProvider));
-        generator.addProvider(event.includeServer(), new ForgeBlockTagGen(output, lookupProvider, event.getExistingFileHelper()));
+        ForgeBlockTagGen blockTagGen = new ForgeBlockTagGen(output, lookupProvider, event.getExistingFileHelper());
+        generator.addProvider(event.includeServer(), blockTagGen);
+        generator.addProvider(event.includeServer(), new ForgeItemTagGen(output, lookupProvider, blockTagGen.contentsGetter(), event.getExistingFileHelper()));
     }
 
     private void onCreativeTabBuilding(BuildCreativeModeTabContentsEvent event)

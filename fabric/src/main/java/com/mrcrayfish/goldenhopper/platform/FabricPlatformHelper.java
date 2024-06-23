@@ -1,6 +1,6 @@
 package com.mrcrayfish.goldenhopper.platform;
 
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 

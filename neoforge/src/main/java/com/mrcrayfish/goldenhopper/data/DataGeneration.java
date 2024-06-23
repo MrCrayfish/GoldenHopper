@@ -25,6 +25,8 @@ public class DataGeneration
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
         generator.addProvider(event.includeServer(), new NeoForgeRecipeGen(output, lookupProvider));
         generator.addProvider(event.includeServer(), new NeoForgeLootTableGen(output, lookupProvider));
-        generator.addProvider(event.includeServer(), new NeoForgeBlockTagGen(output, lookupProvider, event.getExistingFileHelper()));
+        NeoForgeBlockTagGen blockTagGen = new NeoForgeBlockTagGen(output, lookupProvider, event.getExistingFileHelper());
+        generator.addProvider(event.includeServer(), blockTagGen);
+        generator.addProvider(event.includeServer(), new NeoForgeItemTagGen(output, lookupProvider, blockTagGen.contentsGetter(), event.getExistingFileHelper()));
     }
 }

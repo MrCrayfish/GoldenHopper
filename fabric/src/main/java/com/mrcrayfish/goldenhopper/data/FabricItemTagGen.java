@@ -9,9 +9,9 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Author: MrCrayfish
  */
-public class FabricBlockTagGen extends FabricTagProvider.BlockTagProvider
+public class FabricItemTagGen extends FabricTagProvider.ItemTagProvider
 {
-    public FabricBlockTagGen(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture)
+    public FabricItemTagGen(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture)
     {
         super(output, registriesFuture);
     }
@@ -19,6 +19,6 @@ public class FabricBlockTagGen extends FabricTagProvider.BlockTagProvider
     @Override
     protected void addTags(HolderLookup.Provider arg)
     {
-        CommonBlockTagsProvider.accept(key -> new PlatformTagBuilder<>(this.getOrCreateTagBuilder(key)));
+        CommonItemTagsProvider.accept(key -> new PlatformTagBuilder<>(this.getOrCreateTagBuilder(key)));
     }
 }
