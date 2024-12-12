@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class FilterSlot extends Slot
 {
-    private static final ResourceLocation EMPTY_SLOT_FILTER = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/empty_slot_filter");
+    private static final ResourceLocation EMPTY_SLOT_FILTER = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "container/slot/filter");
 
     public FilterSlot(Container container, int index, int x, int y)
     {
@@ -28,8 +28,8 @@ public class FilterSlot extends Slot
 
     @Nullable
     @Override
-    public Pair<ResourceLocation, ResourceLocation> getNoItemIcon()
+    public ResourceLocation getNoItemIcon()
     {
-        return Pair.of(InventoryMenu.BLOCK_ATLAS, EMPTY_SLOT_FILTER);
+        return EMPTY_SLOT_FILTER;
     }
 }

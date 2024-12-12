@@ -45,7 +45,7 @@ jobs:
         SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
         SIGNING_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         TARGET_LOADER: "neoforge"
-      run: ./gradlew :neoforge:runData
+      run: ./gradlew :neoforge:runClientData
     - name: Build and Publish
       env:
         GPR_USER: "MrCrayfish"
