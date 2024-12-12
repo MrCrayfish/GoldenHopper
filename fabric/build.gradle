@@ -1,6 +1,6 @@
 plugins {
     id 'multiloader-loader'
-    id 'fabric-loom' version '1.8-SNAPSHOT'
+    id 'fabric-loom' version '1.9-SNAPSHOT'
 }
 
 repositories {
@@ -19,6 +19,7 @@ repositories {
 
 fabricApi {
     configureDataGeneration {
+        client = true;
         outputDirectory.set(file("src/generated"))
     }
 }
