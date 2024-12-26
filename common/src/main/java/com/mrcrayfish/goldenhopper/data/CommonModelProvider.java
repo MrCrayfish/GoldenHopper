@@ -18,14 +18,13 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Author: MrCrayfish
  */
-public class CommonModelProvider extends ModelProvider
+public class CommonModelProvider implements DataProvider
 {
     private final PackOutput.PathProvider itemsPathProvider;
     private final Map<Item, ClientItem> clientItems = new HashMap<>();
 
     public CommonModelProvider(PackOutput output)
     {
-        super(output);
         this.itemsPathProvider = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "items");
     }
 
@@ -53,5 +52,11 @@ public class CommonModelProvider extends ModelProvider
         return DataProvider.saveAll(output, ClientItem.CODEC, item -> {
             return this.itemsPathProvider.json(item.builtInRegistryHolder().key().location());
         }, this.clientItems);
+    }
+
+    @Override
+    public String getName()
+    {
+        return "Model Definitions";
     }
 }
