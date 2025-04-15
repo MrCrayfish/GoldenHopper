@@ -29,7 +29,6 @@ public class CommonBlockTagsProvider extends IntrinsicHolderTagsProvider<Block>
     protected void addTags(HolderLookup.Provider provider)
     {
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.GOLDEN_HOPPER.get());
-        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.GOLDEN_HOPPER.get());
         this.tag(BlockTags.NEEDS_IRON_TOOL).add(ModBlocks.GOLDEN_HOPPER.get());
     }
 }
