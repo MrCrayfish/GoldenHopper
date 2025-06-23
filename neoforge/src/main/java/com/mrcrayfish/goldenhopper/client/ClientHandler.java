@@ -18,7 +18,7 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 /**
  * Author: MrCrayfish
  */
-@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Constants.MOD_ID, value = Dist.CLIENT)
 public final class ClientHandler
 {
     @SubscribeEvent
@@ -42,6 +42,7 @@ public final class ClientHandler
         event.createProvider(CommonModelProvider::new);
         event.createProvider(CommonRecipeProvider.Runner::new);
         event.createProvider(CommonLootTableProvider::new);
-        event.createBlockAndItemTags(CommonBlockTagsProvider::new, CommonItemTagsProvider::new);
+        event.createProvider(CommonBlockTagsProvider::new);
+        event.createProvider(CommonItemTagsProvider::new);
     }
 }

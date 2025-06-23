@@ -16,7 +16,7 @@ public class DataGeneration implements DataGeneratorEntrypoint
         pack.addProvider((FabricDataGenerator.Pack.Factory<CommonModelProvider>) CommonModelProvider::new);
         pack.addProvider(CommonLootTableProvider::new);
         pack.addProvider(CommonRecipeProvider.Runner::new);
-        CommonBlockTagsProvider blockTagsProvider = pack.addProvider(CommonBlockTagsProvider::new);
-        pack.addProvider((output, registriesFuture) -> new CommonItemTagsProvider(output, registriesFuture, blockTagsProvider.contentsGetter()));
+        pack.addProvider(CommonBlockTagsProvider::new);
+        pack.addProvider(CommonItemTagsProvider::new);
     }
 }
