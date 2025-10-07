@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mrcrayfish.goldenhopper.blockentity.GoldenHopperBlockEntity;
 import com.mrcrayfish.goldenhopper.core.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
@@ -70,15 +71,15 @@ public class GoldenHopperBlock extends HopperBlock
     }
 
     @Override
-    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos)
+    protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction)
     {
         if(level.getBlockEntity(pos) instanceof GoldenHopperBlockEntity hopper)
         {
             float strength = (float) IntStream.range(0, hopper.getContainerSize())
-                .filter(slot -> slot != GoldenHopperBlockEntity.FILTER_SLOT_INDEX) // Ignore the filter slot
-                .mapToObj(hopper::getItem) // Get the stack in the slot
-                .mapToDouble(stack -> Math.clamp((double) stack.getCount() / hopper.getMaxStackSize(stack), 0, 1)) // Get normalised value of count vs max stack size
-                .average().orElse(0); // Get the average of all the results
+                    .filter(slot -> slot != GoldenHopperBlockEntity.FILTER_SLOT_INDEX) // Ignore the filter slot
+                    .mapToObj(hopper::getItem) // Get the stack in the slot
+                    .mapToDouble(stack -> Math.clamp((double) stack.getCount() / hopper.getMaxStackSize(stack), 0, 1)) // Get normalised value of count vs max stack size
+                    .average().orElse(0); // Get the average of all the results
             return Mth.lerpDiscrete(strength, 0, 15);
         }
         return 0;

@@ -2,6 +2,7 @@ package com.mrcrayfish.goldenhopper.mixin;
 
 import com.mrcrayfish.goldenhopper.entity.vehicle.GoldenHopperMinecart;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
@@ -27,7 +28,7 @@ public abstract class DetectorRailBlockMixin
     protected abstract <T extends AbstractMinecart> List<T> getInteractingMinecartOfType(Level level, BlockPos pos, Class<T> minecartClass, Predicate<Entity> predicate);
 
     @Inject(method = "getAnalogOutputSignal", at = @At(value = "HEAD"), cancellable = true)
-    private void goldenhopperGetAnalogOutputSignal(BlockState state, Level level, BlockPos pos, CallbackInfoReturnable<Integer> cir)
+    private void goldenhopperGetAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction, CallbackInfoReturnable<Integer> cir)
     {
         if(state.getValue(DetectorRailBlock.POWERED))
         {
