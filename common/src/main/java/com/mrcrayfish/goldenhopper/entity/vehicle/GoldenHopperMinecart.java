@@ -1,5 +1,6 @@
 package com.mrcrayfish.goldenhopper.entity.vehicle;
 
+import com.mrcrayfish.goldenhopper.blockentity.GoldenHopperBlockEntity;
 import com.mrcrayfish.goldenhopper.core.ModBlocks;
 import com.mrcrayfish.goldenhopper.core.ModEntities;
 import com.mrcrayfish.goldenhopper.core.ModItems;
@@ -75,7 +76,7 @@ public class GoldenHopperMinecart extends MinecartHopper implements WorldlyConta
     @Override
     public boolean canPlaceItem(int index, ItemStack stack)
     {
-        return index != FILTER_SLOT_INDEX && (this.getItem(FILTER_SLOT_INDEX).isEmpty() || stack.getItem() == this.getItem(FILTER_SLOT_INDEX).getItem());
+        return GoldenHopperBlockEntity.canInsertIntoSlot(index, FILTER_SLOT_INDEX, this.getItem(FILTER_SLOT_INDEX), stack);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class GoldenHopperMinecart extends MinecartHopper implements WorldlyConta
     @Override
     public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction)
     {
-        return index != FILTER_SLOT_INDEX && (this.getItem(FILTER_SLOT_INDEX).isEmpty() || stack.getItem() == this.getItem(FILTER_SLOT_INDEX).getItem());
+        return index != FILTER_SLOT_INDEX && this.canPlaceItem(index, stack);
     }
 
     @Override

@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -79,9 +78,31 @@ public class GoldenHopperBlockEntity extends HopperBlockEntity implements Worldl
     @Override
     public boolean canPlaceItem(int index, ItemStack stack)
     {
-        if(index != FILTER_SLOT_INDEX)
+        return canInsertIntoSlot(index, FILTER_SLOT_INDEX, this.getItems().get(FILTER_SLOT_INDEX), stack);
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction)
+    {
+        return index != FILTER_SLOT_INDEX && this.canPlaceItem(index, stack);
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
+    {
+        return index != FILTER_SLOT_INDEX;
+    }
+
+    @Override
+    public boolean canTakeItem(Container container, int index, ItemStack stack)
+    {
+        return index != FILTER_SLOT_INDEX;
+    }
+
+    public static boolean canInsertIntoSlot(int index, int filterIndex, ItemStack filter, ItemStack stack)
+    {
+        if(index != filterIndex)
         {
-            ItemStack filter = this.getItems().get(FILTER_SLOT_INDEX);
             if(filter.isEmpty())
                 return true;
 
@@ -111,29 +132,13 @@ public class GoldenHopperBlockEntity extends HopperBlockEntity implements Worldl
                 if(first != null && second != null && !compareEnchantments(first, second))
                     return false;
             }
+
+            return true;
         }
-        return true;
+        return false;
     }
 
-    @Override
-    public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction)
-    {
-        return this.getItems().get(FILTER_SLOT_INDEX).isEmpty() || stack.getItem() == this.getItems().get(FILTER_SLOT_INDEX).getItem();
-    }
-
-    @Override
-    public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction)
-    {
-        return index != FILTER_SLOT_INDEX;
-    }
-
-    @Override
-    public boolean canTakeItem(Container container, int index, ItemStack stack)
-    {
-        return index != FILTER_SLOT_INDEX;
-    }
-
-    private static boolean comparePotions(PotionContents first, PotionContents second)
+    public static boolean comparePotions(PotionContents first, PotionContents second)
     {
         // Compare the potion value
         Optional<Holder<Potion>> firstOptional = first.potion();
@@ -160,8 +165,9 @@ public class GoldenHopperBlockEntity extends HopperBlockEntity implements Worldl
         return true;
     }
 
-    private static boolean compareEnchantments(ItemEnchantments first, ItemEnchantments second)
+    public static boolean compareEnchantments(ItemEnchantments first, ItemEnchantments second)
     {
+        // The matching stack must have at least the enchantment types of the filter.
         for(var holder : first.keySet())
         {
             if(second.getLevel(holder) <= 0)
