@@ -4,9 +4,8 @@ import com.mrcrayfish.goldenhopper.Constants;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 /**
@@ -14,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
  */
 public class GoldenHopperScreen extends AbstractContainerScreen<GoldenHopperMenu>
 {
-    private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/container/golden_hopper.png");
+    private static final Identifier GUI_TEXTURE = Identifier.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/container/golden_hopper.png");
 
     public GoldenHopperScreen(GoldenHopperMenu container, Inventory playerInventory, Component titleIn)
     {

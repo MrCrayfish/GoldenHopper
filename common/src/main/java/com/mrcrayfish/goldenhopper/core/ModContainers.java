@@ -4,7 +4,7 @@ import com.mrcrayfish.framework.api.registry.RegistryContainer;
 import com.mrcrayfish.framework.api.registry.RegistryEntry;
 import com.mrcrayfish.goldenhopper.Constants;
 import com.mrcrayfish.goldenhopper.inventory.GoldenHopperMenu;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.MenuType;
 
 /**
@@ -13,5 +13,5 @@ import net.minecraft.world.inventory.MenuType;
 @RegistryContainer
 public class ModContainers
 {
-    public static final RegistryEntry<MenuType<GoldenHopperMenu>> GOLDEN_HOPPER = RegistryEntry.menuType(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "golden_hopper"), GoldenHopperMenu::new);
+    public static final RegistryEntry<MenuType<GoldenHopperMenu>> GOLDEN_HOPPER = RegistryEntry.menuType(Identifier.fromNamespaceAndPath(Constants.MOD_ID, "golden_hopper"), GoldenHopperMenu::new);
 }

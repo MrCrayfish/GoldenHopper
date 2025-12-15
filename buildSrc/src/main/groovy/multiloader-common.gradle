@@ -43,11 +43,6 @@ repositories {
             includeGroup("com.mrcrayfish")
         }
     }
-    if (!System.getenv("CI") && System.getenv("LOCAL_MAVEN")) {
-        maven {
-            url "file://" + System.getenv("LOCAL_MAVEN")
-        }
-    }
     maven {
         name = 'BlameJared'
         url = 'https://maven.blamejared.com'
@@ -162,10 +157,6 @@ publishing {
                     username = project.findProperty("gpr.user") ?: System.getenv("GPR_USER")
                     password = project.findProperty("gpr.key") ?: System.getenv("GPR_KEY")
                 }
-            }
-        } else if (System.getenv("LOCAL_MAVEN")) {
-            maven {
-                url "file://" + System.getenv("LOCAL_MAVEN")
             }
         }
     }

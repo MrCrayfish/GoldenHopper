@@ -50,7 +50,7 @@ public class CommonModelProvider implements DataProvider
     {
         this.generate();
         return DataProvider.saveAll(output, ClientItem.CODEC, item -> {
-            return this.itemsPathProvider.json(item.builtInRegistryHolder().key().location());
+            return this.itemsPathProvider.json(item.builtInRegistryHolder().key().identifier());
         }, this.clientItems);
     }
 
