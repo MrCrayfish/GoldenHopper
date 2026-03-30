@@ -1,7 +1,7 @@
 package com.mrcrayfish.goldenhopper.inventory;
 
 import com.mrcrayfish.goldenhopper.Constants;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -17,23 +17,23 @@ public class GoldenHopperScreen extends AbstractContainerScreen<GoldenHopperMenu
 
     public GoldenHopperScreen(GoldenHopperMenu container, Inventory playerInventory, Component titleIn)
     {
-        super(container, playerInventory, titleIn);
-        this.imageHeight = 133;
+        super(container, playerInventory, titleIn, DEFAULT_IMAGE_WIDTH, 133);
         this.inventoryLabelY = 40;
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks)
+    public void extractRenderState(GuiGraphicsExtractor extractor, int mouseX, int mouseY, float partialTicks)
     {
-        super.render(graphics, mouseX, mouseY, partialTicks);
-        this.renderTooltip(graphics, mouseX, mouseY);
+        super.extractRenderState(extractor, mouseX, mouseY, partialTicks);
+        this.extractTooltip(extractor, mouseX, mouseY);
     }
 
     @Override
-    protected void renderBg(GuiGraphics graphics, float partialTicks, int mouseX, int mouseY)
+    public void extractBackground(GuiGraphicsExtractor extractor, int mouseX, int mouseY, float partialTicks)
     {
+        super.extractBackground(extractor, mouseX, mouseY, partialTicks);
         int startX = (this.width - this.imageWidth) / 2;
         int startY = (this.height - this.imageHeight) / 2;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, startX, startY, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        extractor.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, startX, startY, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
     }
 }
