@@ -3,29 +3,34 @@ package com.mrcrayfish.goldenhopper.data;
 import com.mrcrayfish.goldenhopper.core.ModBlocks;
 import com.mrcrayfish.goldenhopper.core.ModItems;
 import com.mrcrayfish.goldenhopper.platform.Services;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.MultiRegistryBootstrap;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.Set;
 
 /**
  * Author: MrCrayfish
  */
 public class CommonRecipeProvider extends RecipeProvider
 {
-    private final HolderLookup.RegistryLookup<Item> items;
+    private final HolderGetter<Item> items;
 
-    public CommonRecipeProvider(HolderLookup.Provider provider, RecipeOutput output)
+    public CommonRecipeProvider(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput)
     {
-        super(provider, output);
-        this.items = provider.lookupOrThrow(Registries.ITEM);
+        super(recipeOutput, advancementOutput);
+        this.items = recipeOutput.lookup(Registries.ITEM);
     }
 
     @Override
@@ -55,23 +60,21 @@ public class CommonRecipeProvider extends RecipeProvider
             .save(this.output);
     }
 
-    public static final class Runner extends RecipeProvider.Runner
+    public static MultiRegistryBootstrap create()
     {
-        public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture)
+        return new MultiRegistryBootstrap()
         {
-            super(output, completableFuture);
-        }
+            @Override
+            public Set<ResourceKey<? extends @NotNull Registry<?>>> requestedRegistries()
+            {
+                return Set.of(Registries.RECIPE, Registries.ADVANCEMENT);
+            }
 
-        @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput output)
-        {
-            return new CommonRecipeProvider(provider, output);
-        }
-
-        @Override
-        public String getName()
-        {
-            return "Golden Hopper Recipes";
-        }
+            @Override
+            public void run(MultiRegistryBootstrap.BootstrapGetter getter)
+            {
+                new CommonRecipeProvider(getter.get(Registries.RECIPE), getter.get(Registries.ADVANCEMENT)).buildRecipes();
+            }
+        };
     }
 }

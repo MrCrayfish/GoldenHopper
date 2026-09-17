@@ -9,6 +9,7 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.MinecartRenderer;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -50,12 +51,15 @@ public final class ClientHandler
     private static void onGatherClientData(GatherDataEvent.Client event)
     {
         event.createProvider(CommonModelProvider::new);
-        event.createProvider(CommonRecipeProvider.Runner::new);
-        event.createProvider(CommonLootTableProvider::new);
+        event.createReloadableRegistryObjects(
+            new RegistrySetBuilder()
+                .add(Registries.LOOT_TABLE, CommonLootTableProvider.create())
+                .add(CommonRecipeProvider.create())
+        );
 
         DataGenerator generator = event.getGenerator();
         PackOutput output = generator.getPackOutput();
-        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getReloadableLookupProvider();
         event.addProvider(new TagsProvider<@NotNull Block>(output, Registries.BLOCK, lookupProvider, Constants.MOD_ID) {
             @Override
             protected void addTags(HolderLookup.@NotNull Provider provider) {

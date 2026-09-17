@@ -1,6 +1,5 @@
 package com.mrcrayfish.goldenhopper.block;
 
-import com.mojang.serialization.MapCodec;
 import com.mrcrayfish.goldenhopper.blockentity.GoldenHopperBlockEntity;
 import com.mrcrayfish.goldenhopper.core.ModBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -9,7 +8,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.HopperBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -27,17 +25,9 @@ import java.util.stream.IntStream;
  */
 public class GoldenHopperBlock extends HopperBlock
 {
-    public static final MapCodec<HopperBlock> CODEC = simpleCodec(GoldenHopperBlock::new);
-
     public GoldenHopperBlock(Properties properties)
     {
         super(properties);
-    }
-
-    @Override
-    public MapCodec<HopperBlock> codec()
-    {
-        return CODEC;
     }
 
     @Override

@@ -8,7 +8,8 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 # updateJSONURL = "https://mrcrayfish.com/modupdatejson?id=${mod_id}"
 displayURL = "${mod_homepage}"
-logoFile = "assets/${mod_id}/banner.png"
+bannerFile = "assets/${mod_id}/banner.png"
+iconFile = "assets/${mod_id}/icon.png"
 logoBlur = false
 authors = "${mod_author}"
 description = '''${mod_desc}'''
@@ -38,6 +39,5 @@ ordering = "NONE"
 side = "BOTH"
 
 [modproperties."${mod_id}"]
-    catalogueImageIcon="assets/${mod_id}/icon.png"
     catalogueBackground="assets/${mod_id}/background.png"
     configuredBackground="minecraft:textures/block/stone.png"
